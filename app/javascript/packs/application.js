@@ -15,3 +15,19 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+  
+if ("geolocation" in navigator) {
+	console.log('geolocation is available');
+	navigator.geolocation.getCurrentPosition(function(position) {
+		const log = document.getElementById('log');
+		log.addEventListener('click', function (event) {
+			const lat = position.coords.latitude
+			const lon = position.coords.longitude
+			document.getElementById('latitude').textContent = lat
+			document.getElementById('longitude').textContent = lon	  
+		});
+	});
+
+} else {
+	console.log('geolocation IS NOT available');
+}
