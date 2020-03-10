@@ -29,7 +29,8 @@ if ("geolocation" in navigator) {
 		const map = L.map('trackmap').setView([0, 0], 1);		
 
 		// Required by leaflet to use it
-		const attribution = '&copy; <a href=""https://www.openstreetmap.org/"">OpenStreetMap</a> contributors | &copy; Entrega App!';
+		const attribution = '&copy; <a href=""https://www.openstreetmap.org/"">OpenStreetMap</a> contributors | &copy; Trackmi ';
+		const subdomains: ['a','b','c']
 		const tileURL = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 		const tiles = L.tileLayer( tileURL , {attribution} );
 		tiles.addTo(map);
