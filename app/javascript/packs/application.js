@@ -46,6 +46,9 @@ if ("geolocation" in navigator) {
 			// add marker to map with the coordinates
 			var marker = L.marker([lat, lon]).addTo(map)
 
+			// set the view to the lat, lon coordinates and zoom it.
+			map.setView([lat, lon], 18)
+
 		});
 	});
 
