@@ -1,11 +1,24 @@
-<h1> Tracking Data </h1>
-<p>Your Location is
+<div class="card">
+	<div class="card-title text-center">
+		  <h1> Tracking Data </h1>
+	</div>
+	  <div class="card-body">
+	  
+			<p class="coordinates">Your Location is
 
-<div>
-	Latitude = <span id='latitude'></span>&deg;
-<br>
-	Longitude = <span id='longitude'></span>&deg;
+			<div>
+				Latitude = <span id='latitude'></span>&deg;
+			<br>
+				Longitude = <span id='longitude'></span>&deg;
+			</div>
+
+		</p>
+
+			<button id='log' type="button" class="btn btn-primary">Log</button>
+
+			<br>
+			<div class="d-flex justify-content-center"">  
+				<div id='trackmap'></div>
+			</div>
+	  </div>
 </div>
-
-
-<button id='log'> Log </button>
