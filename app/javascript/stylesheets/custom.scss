@@ -1,12 +1,13 @@
 #trackmap {
-    height: 330px;
-    width: 500px;
+    height: 200px;
+    width: 300px;
 }
 
 .card {
-    margin-left: 100px;
-    margin-top: 200px;
-    margin-bottom: 300px;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 20%;
+    margin-bottom: 30%;
 }
 
 .text-center {
@@ -14,8 +15,138 @@
     padding-top: 30px;
 }
 
+.ptitle {
+    font-weight: bold;
+}
+
 #log {
     margin-top: 20px;
     margin-bottom: 60px;
     font-size: 1.2rem !important;
+}
+
+
+/* ========================================================= */
+/* ================  MEDIA QUERIES - PORTRAIT ============== */
+/* ========================================================= */
+
+
+@media (max-width: 992px) and (orientation : portrait) { 
+
+  .initialTitle {
+    font-size: 1.7rem !important;
+  }
+
+  .edit, .check, .back {
+      font-size: 1.1rem !important;
+  }
+
+}
+
+/* ========================================================= */
+
+@media (max-width: 767px) and (orientation : portrait) {
+
+.col-sm-6.col-form-label { 
+  text-align: center;
+}
+
+.datos_ingresados, .datosCalculados, .en_resumen{
+    margin-left: 15%;
+}
+
+  #product_exchange_rate, #product_valor_maximo_cop, #product_valor_usd, #product_peso, #product_name{
+    margin-left: 30% !important;
+  }
+
+  .showButtons {
+    margin-left: 15% !important;
+  }
+
+th#name, td#name {
+  padding-left: 4% !important;
+  width: 10% !important;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+.edit, .check, .back{
+    width: 50%;
+    margin-top: 7.5%;
+    margin-bottom: 8.5%;
+}
+
+.cardInitial {
+    margin: 0% !important;
+}
+
+}
+
+/* ========================================================= */
+
+@media (max-width: 576px) and (orientation : portrait) {
+
+  .card {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+    margin-bottom: 20%;
+  }
+
+}
+
+/* =============================================================== */
+/* ===================MEDIA QUERIES - LANDSCAPE ================== */
+/* =============================================================== */
+
+@media (max-width:800px) and (min-width:400px) {
+  input, select, optgroup, textarea {
+    font-size: 0.8rem !important;
+    max-width: 100%;
+  }
+
+  .btn-submitbutton {
+    font-size: 1rem !important;
+  }
+
+  .card-body-initial{
+    min-height: 1px;
+    padding-top: 1.30rem !important;
+  }
+
+  .initialTitle {
+    font-size: 1.6rem !important;
+  }
+
+  .back-products {
+    margin-left: 34% !important;
+    margin-right: 45% !important;
+    margin-bottom: 12% !important;
+  }
+
+  .back {  
+  background-color: black !important;
+  color: white !important;
+  border-color: black !important;  
+  }
+
+  .edit, .check, .back {
+    font-size: 1rem !important;
+    width: 30%;
+  }
+
+}
+
+
+@media (min-width:802px) and (max-width:1200px) {
+  .initialTitle {
+    font-size: 1.9rem !important;
+  }
+
+  .edit, .check, .back{
+    font-size: 1rem !important;
+    width: 30% !important;
+  }
+
+    
 }
