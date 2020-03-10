@@ -8,6 +8,9 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
+import 'leaflet'
+import 'bootstrap'
+import '../stylesheets/application'
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -15,19 +18,39 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+
+
   
 if ("geolocation" in navigator) {
 	console.log('geolocation is available');
-	navigator.geolocation.getCurrentPosition(function(position) {
+	navigator.geolocation.getCurrentPosition(function(position) {		
+		// initialize the map on the "map" div with a given center and zoom
+		const map = L.map('trackmap').setView([0, 0], 1);		
+
+		// Required by leaflet to use it
+		const attribution = '&copy; <a href=""https://www.openstreetmap.org/"">OpenStreetMap</a> contributors | &copy; Entrega App!';
+		const tileURL = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+		const tiles = L.tileLayer( tileURL , {attribution} );
+		tiles.addTo(map);
+
+		// Listen for click on Log button
 		const log = document.getElementById('log');
 		log.addEventListener('click', function (event) {
+
 			const lat = position.coords.latitude
 			const lon = position.coords.longitude
 			document.getElementById('latitude').textContent = lat
-			document.getElementById('longitude').textContent = lon	  
+			document.getElementById('longitude').textContent = lon
+
+			// add marker to map with the coordinates
+			var marker = L.marker([lat, lon]).addTo(map)
+
 		});
 	});
 
 } else {
 	console.log('geolocation IS NOT available');
 }
+
+
