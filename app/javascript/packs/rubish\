@@ -1,44 +1,36 @@
+if ("geolocation" in navigator) {
+  console.log('geolocation is available');
+  navigator.geolocation.getCurrentPosition(function(position) {   
+    // initialize the map on the "map" div with a given center and zoom
+    const map = L.map('trackmap').setView([0, 0], 1);   
 
+    // Required by leaflet to use it
+    const attribution = '&copy; <a href=""https://www.openstreetmap.org/"">OpenStreetMap</a> contributors | &copy; Trackmi ';
+    const tileURL = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    const maxZoom = 19
+    const tiles = L.tileLayer( tileURL , {attribution}, maxZoom);
+    tiles.addTo(map);
 
-//  navigator.geolocation.getCurrentPosition(function(position) {
-//  const lat = position.coords.latitude
-//  const lon = position.coords.longitude
-//  document.getElementById('latitude').textContent = lat
-//  document.getElementById('longitude').textContent = lon
-//  });
-//} else {
-//  console.log('geolocation IS NOT available');
-//}
-//
-//       
+    // Listen for click on Log button
+    const log = document.getElementById('log');
+    log.addEventListener('click', function (event) {
 
+      alert("Button Clicked")
+      
+      const lat = position.coords.latitude
+      const lon = position.coords.longitude
+      document.getElementById('latitude').textContent = lat
+      document.getElementById('longitude').textContent = lon
 
+      // add marker to map with the coordinates
+      var marker = L.marker([lat, lon]).addTo(map)
 
-//  document.getElementById("log").addEventListener("click", showCoordinates); 
-//
-//  function showCoordinates(){
-//    navigator.geolocation.getCurrentPosition(function(position) {
-//    const lat = position.coords.latitude
-//    const lon = position.coords.longitude
-//    document.getElementById('latitude').textContent = lat
-//    document.getElementById('longitude').textContent = lon
-//  })
-//} else {
-//  console.log('geolocation IS NOT available');
-//}
+      // set the view to the lat, lon coordinates and zoom it.
+      map.setView([lat, lon], 17)
 
+    });
+  });
 
-
-
-
-
-
-
-//if ("geolocation" in navigator) {
-//console.log('geolocation is available');
-//navigator.geolocation.getCurrentPosition(function(position) {
-//  console.log(position)
-//});
-//} else {
-//console.log('geolocation IS NOT available');
-//} //
+} else {
+  console.log('geolocation IS NOT available');
+}
