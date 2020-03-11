@@ -31,28 +31,8 @@ if (navigator.geolocation) {
     const tileURL = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png -> https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
     const maxZoom = 19
     const tiles = L.tileLayer( tileURL , {attribution}, maxZoom);
-    tiles.addTo(map);
-
-    // Listen for click on Log button
-    const log = document.getElementById('log');
-    log.addEventListener('click', function (event) {
-
-      //alert("Button Clicked")
-      
-      const lat = position.coords.latitude
-      const lon = position.coords.longitude
-      document.getElementById('latitude').textContent = lat
-      document.getElementById('longitude').textContent = lon
-
-      // add marker to map with the coordinates
-      var marker = L.marker([lat, lon]).addTo(map)
-
-      // set the view to the lat, lon coordinates and zoom it.
-      map.setView([lat, lon], 17)
-
-    });
+    tiles.addTo(map);  
   });
-
 } else {
   console.log('geolocation IS NOT available');
 }
