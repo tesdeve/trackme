@@ -26,7 +26,6 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 
-# Gems added
 
 
 # Reduces boot times through caching; required in config/boot.rb
