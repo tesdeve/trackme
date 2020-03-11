@@ -34,3 +34,26 @@ if ("geolocation" in navigator) {
 } else {
   console.log('geolocation IS NOT available');
 }
+
+
+PART REMOVED
+
+
+    // Listen for click on Log button
+    const log = document.getElementById('log');
+    log.addEventListener('click', function (event) {
+
+      //alert("Button Clicked")
+      
+      const lat = position.coords.latitude
+      const lon = position.coords.longitude
+      document.getElementById('latitude').textContent = lat
+      document.getElementById('longitude').textContent = lon
+
+      // add marker to map with the coordinates
+      var marker = L.marker([lat, lon]).addTo(map)
+
+      // set the view to the lat, lon coordinates and zoom it.
+      map.setView([lat, lon], 17)
+
+    });

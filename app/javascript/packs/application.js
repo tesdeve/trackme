@@ -28,17 +28,13 @@ if (navigator.geolocation) {
 
     // Required by leaflet to use it
     const attribution = '&copy; <a href=""https://www.openstreetmap.org/"">OpenStreetMap</a> contributors | &copy; Trackmi ';
-    const tileURL = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png -> https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    const tileURL = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
     const maxZoom = 19
-    const tiles = L.tileLayer( tileURL , {attribution}, maxZoom);
-    tiles.addTo(map);
-
+    const tiles = L.tileLayer( tileURL , {attribution, maxZoom});
+    tiles.addTo(map);  
     // Listen for click on Log button
     const log = document.getElementById('log');
     log.addEventListener('click', function (event) {
-
-      //alert("Button Clicked")
-      
       const lat = position.coords.latitude
       const lon = position.coords.longitude
       document.getElementById('latitude').textContent = lat
@@ -52,7 +48,6 @@ if (navigator.geolocation) {
 
     });
   });
-
 } else {
   console.log('geolocation IS NOT available');
 }
