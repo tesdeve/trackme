@@ -8,7 +8,7 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
-import 'leaflet'
+//import 'leaflet'
 import 'bootstrap'
 import '../stylesheets/application'
 
@@ -28,8 +28,8 @@ if (navigator.geolocation) {
 
     // Required by leaflet to use it
     const attribution = '&copy; <a href=""https://www.openstreetmap.org/"">OpenStreetMap</a> contributors | &copy; Trackmi ';
-    const tileURL = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-    const maxZoom = 19
+    const tileURL = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
+    const maxZoom = 19;
     const tiles = L.tileLayer( tileURL , {attribution, maxZoom});
     tiles.addTo(map);  
     // Listen for click on Log button
