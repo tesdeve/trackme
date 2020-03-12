@@ -49,16 +49,16 @@
 @media (max-width: 576px) and (orientation : portrait) {
 
   .card {
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 5%;
-    margin-bottom: 20%;
+    margin-left: 5% !important;
+    margin-right: 5% !important;
+    margin-top: 5% !important;
+    margin-bottom: 20% !important;
   }
-
+/*.
     #trackmap {
         height: 400px;
         width: 100vw;
-    }
+    }*/
 }
 
 /* =============================================================== */

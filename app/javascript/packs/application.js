@@ -8,7 +8,7 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
-//import 'leaflet'
+import 'leaflet'
 import 'bootstrap'
 import '../stylesheets/application'
 
@@ -20,6 +20,7 @@ import '../stylesheets/application'
 // const imagePath = (name) => images(name, true)
 
 
+
 if (navigator.geolocation) {
   console.log('geolocation is available');
   navigator.geolocation.getCurrentPosition(function(position) {   
@@ -27,7 +28,7 @@ if (navigator.geolocation) {
     const map = L.map('trackmap').setView([0, 0], 1);   
 
     // Required by leaflet to use it
-    const attribution = '&copy; <a href=""https://www.openstreetmap.org/"">OpenStreetMap</a> contributors | &copy; Trackmi ';
+    const attribution = 'Map data: &copy; <a href=""https://www.openstreetmap.org/"">OpenStreetMap</a> contributors | &copy; Trackmi ';
     const tileURL = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
     const maxZoom = 19;
     const tiles = L.tileLayer( tileURL , {attribution, maxZoom});
@@ -51,3 +52,14 @@ if (navigator.geolocation) {
 } else {
   console.log('geolocation IS NOT available');
 }
+
+
+
+
+
+
+
+
+
+
+
