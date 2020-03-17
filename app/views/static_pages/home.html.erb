@@ -15,11 +15,38 @@
 		</p>
 		<div class="centeButton text-center"> 
 
-			<button id='log' type="button" class="btn btn-primary">Log</button>
+			<!--	  <button id='log' type="button" class="btn btn-primary logButton">Log</button>   -->
+			<br>
+					<button id='startButton' type="button" class="btn btn-primary startButton">Start</button> |			
+					<button id='stopButton' type="button" class="btn btn-primary stopButton redColor ">Stop</button> 
+
+			<br>
+			<br>
+					<button id='anotherButton' type="button" class="btn btn-primary stopButton greenColor "> Another Reading</button>
+			<br>
+			<br>
 		</div>
 			<br>
 			<div class="d-flex justify-content-center"">  
 				<div id='trackmap'></div>
 			</div>
-	  </div>
+			<%#javascript_tag do %>
+				<!--var map = L.map('trackmap');  --> 
+			<%# end %>
 </div>
+
+
+<div>
+	<span id="latlng">0 0</span>
+</div>
+
+<%= button_tag("Location", :onclick => "myLocation()") %>
+
+<br>
+
+<div id='trackmap'></div>
+
+<%= javascript_tag do %>
+	var map = L.map('trackmap');
+	var marker = L.circleMarker([0, 0]).addTo(map);
+<% end %>

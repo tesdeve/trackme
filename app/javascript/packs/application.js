@@ -8,6 +8,9 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
+// Adds custom directory
+require("customjs/location")
+
 import 'leaflet'
 import 'bootstrap'
 import '../stylesheets/application'
@@ -19,47 +22,103 @@ import '../stylesheets/application'
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+console.log("Location JS loaded");
 
+ // Should be used to get user's current location  
+//  window.alerty = function(){
+//    alert("COMENZAMOS")  
+//  }
 
-if (navigator.geolocation) {
-  console.log('geolocation is available');
-  navigator.geolocation.getCurrentPosition(function(position) {   
-    // initialize the map on the "map" div with a given center and zoom
-    const map = L.map('trackmap').setView([0, 0], 1);   
+// Set User's current Location
+window.myLocation = function(){
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      const nav_lat = position.coords.latitude,
+          nav_lng = position.coords.longitude;
 
-    // Required by leaflet to use it
-    const attribution = 'Map data: &copy; <a href=""https://www.openstreetmap.org/"">OpenStreetMap</a> contributors | &copy; Trackmi ';
-    const tileURL = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
-    const maxZoom = 19;
-    const tiles = L.tileLayer( tileURL , {attribution, maxZoom});
-    tiles.addTo(map);  
-    // Listen for click on Log button
-    const log = document.getElementById('log');
-    log.addEventListener('click', function (event) {
-      const lat = position.coords.latitude
-      const lon = position.coords.longitude
-      document.getElementById('latitude').textContent = lat
-      document.getElementById('longitude').textContent = lon
+      document.getElementById('latitude').textContent =  nav_lat
+      document.getElementById('longitude').textContent =  nav_lng
 
-      // add marker to map with the coordinates
-      var marker = L.marker([lat, lon]).addTo(map)
+      console.log(nav_lat)
+      console.log(nav_lng)
 
-      // set the view to the lat, lon coordinates and zoom it.
-      map.setView([lat, lon], 17)
+      console.log("(Lat - Lng): " + convertDMS(nav_lat, nav_lng));
+      document.getElementById('latlng').textContent = convertDMS(nav_lat, nav_lng);
 
+      map.setView([nav_lat, nav_lng], map.getZoom() ? map.getZoom() : 15);
+      var marker = L.marker([nav_lat,  nav_lng]).addTo(map)
+      marker.setLatLng([nav_lat, nav_lng]);
     });
-  });
-} else {
-  console.log('geolocation IS NOT available');
+  }
 }
 
 
+  $('anotherButton').click(function() {
+    location.reload();
+  });
+
+// // Functions that listen for click on startStopButton and orquestrate the app
+  $(function() {    
+    let intervalID 
+    let count = 0  // can be REMOVED
+
+    var startButton = document.getElementById('startButton');
+    //Adds event listener to the click on startStopButton
+    startButton.addEventListener('click', function (event) { 
+      console.log("START WAS PRESSED")    // can be REMOVED       
+      intervalID = setInterval(function () {
+        myLocation() ;
+        count += 1; // can be REMOVED
+        console.log(count) // can be REMOVED
+        }, 3000);
+      })
+
+    var stopButton = document.getElementById('stopButton');
+    stopButton.addEventListener('click', function (event) {
+      console.log("STOP WAS PRESSED") // can be REMOVED
+      clearInterval(intervalID);
+    })
+
+    var anotherButton = document.getElementById('anotherButton');
+    anotherButton.addEventListener('click', function (event) {      
+      location.reload();
+    })
+  })
+
+console.log("Location JS loaded");
+
+$( document ).on('turbolinks:load', function() {
+  
+  var tile_layer = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution = 'Map data: &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors | &copy; TrackMe!',
+    maxZoom = 19;
+
+  L.tileLayer(tile_layer, {attribution, maxZoom}).addTo(map);
+  map.options.scrollWheelZoom = true;
+  map.options.doubleClickZoom = true;
+
+  if(navigator.geolocation)
+    myLocation();
+  else
+    map.setView([0, 0], 2);
+})
 
 
-
-
-
-
-
-
-
+function convertDMS( lat, lng ) {
+ 
+  var convertLat = Math.abs(lat);
+  var LatDeg = Math.floor(convertLat);
+  var LatSeg = (convertLat - LatDeg) * 3600
+  var LatMin = Math.floor(LatSeg / 60);
+  LatSeg = Math.round(100*(LatSeg - (LatMin * 60)))/100;
+  var LatCardinal = ((lat > 0) ? "N" : "S");
+   
+  var convertLng = Math.abs(lng);
+  var LngDeg = Math.floor(convertLng);
+  var LngSeg = (convertLng - LngDeg) * 3600
+  var LngMin = Math.floor(LngSeg / 60);
+  LngSeg = Math.round(100*(LngSeg - (LngMin * 60)))/100;
+  var LngCardinal = ((lng > 0) ? "E" : "W");
+   
+  return LatDeg + 'º ' + LatMin + '′ ' + LatSeg + '″' + LatCardinal   + "  -  " + LngDeg + 'º ' + LngMin + '′ ' + LngSeg + '″' + LngCardinal;
+}
