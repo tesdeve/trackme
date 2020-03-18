@@ -43,96 +43,17 @@ import '../stylesheets/application'
 
 console.log("Location JS loaded");
 
+ //$(function() {  
+
 // Should be used to get user's current location  
 //  window.alerty = function(){
 //    //alert("COMENZAMOS")  
 //   
 //  }
 let options
-// Set User's current Location
-window.myLocation = function(){
+var watchID
 
-  var watchID = null
-
-  if(navigator.geolocation) {
-    options ={
-     enableHighAccuracy: false, // Do not use GPS as it will drain the battery
-     timeout: 30000, // Will respond with an error after 5 seconds of no successful geolocation
-     maximumAge: 0 // will not use cached results
-   }
-  
-    var watchID = navigator.geolocation.watchPosition(coordinates, error, options)
-
-  }
-  
-  function coordinates(position) {
-    console.log(position) // can be delted
-
-    // Get Latitude and Longitude
-    const nav_lat = position.coords.latitude,
-          nav_lng = position.coords.longitude;
-
-    document.getElementById('latitude').textContent =  nav_lat
-    document.getElementById('longitude').textContent =  nav_lng
-
-    console.log(nav_lat)
-    console.log(nav_lng)
-
-    console.log("(Lat - Lng): " + convertDMS(nav_lat, nav_lng));
-    document.getElementById('latlng').textContent = convertDMS(nav_lat, nav_lng);
-
-    map.setView([nav_lat, nav_lng], map.getZoom() ? map.getZoom() : 17);
-    //var marker = L.marker([nav_lat,  nav_lng]).addTo(map)
-    marker.setLatLng([nav_lat, nav_lng]);
- 
-  }
-
-  function error(err) {
-  console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
-}
-
-
-  $('anotherButton').click(function() {
-    location.reload();
-  });
-
-// // Functions that listen for click on start/stop Buttons and orquestrate the app
-  $(function() {    
-    let intervalID 
-    let count = 0  // can be REMOVED
-
-    var startButton = document.getElementById('startButton');
-    //Adds event listener to the click on startStopButton
-    startButton.addEventListener('click', function (event) { 
-      console.log("START WAS PRESSED")    // can be REMOVED 
-        myLocation();
-
-      //intervalID = setInterval(function () {
-      //  myLocation();
-      //  count += 1; // can be REMOVED
-      //  console.log(count) // can be REMOVED
-      //  }, 3000);
-      })
-
-    var stopButton = document.getElementById('stopButton');
-    //if (watchID) 
-    //  navigator.geolocation.watchPosition(watchID) 
-//
-    //  watchID = null
-
-    stopButton.addEventListener('click', function (event) {
-      console.log("STOP WAS PRESSED") // can be REMOVED
-      navigator.geolocation.clearWatch(watchID) 
-    })
-
-    var anotherButton = document.getElementById('anotherButton');
-    anotherButton.addEventListener('click', function (event) {      
-      location.reload();
-    })
-  })
-
-
+// Initialize the map
 $( document ).on('turbolinks:load', function() {
   
   var tile_layer = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -144,10 +65,80 @@ $( document ).on('turbolinks:load', function() {
   map.options.doubleClickZoom = true;
 
   if(navigator.geolocation)
-    myLocation();
+    navigator.geolocation.getCurrentPosition(myLocation);
   else
     map.setView([0, 0], 2);
 })
+
+window.setWatch = function() {    
+    options ={
+      enableHighAccuracy: false, // Do not use GPS as it will drain the battery
+      timeout: 5000, // Will respond with an error after 5 seconds of no successful geolocation
+      maximumAge: 0 // will not use cached results
+    };
+    watchID = navigator.geolocation.watchPosition(myLocation, error, options)
+}
+
+// Functions that listen for click on start/stop Buttons and orquestrate the app
+$( document ).on('turbolinks:load', function() {
+  var startButton = document.getElementById('startButton'); 
+  startButton.addEventListener('click', function(event) { 
+    setWatch() 
+    console.log("START WAS PRESSED")    // can be REMOVED 
+    
+      //myLocation();
+    })
+
+  var stopButton = document.getElementById('stopButton');
+  stopButton.addEventListener('click', function(event) {
+    console.log("STOP WAS PRESSED") // can be REMOVED
+    navigator.geolocation.clearWatch(watchID) 
+  })
+
+  var anotherButton = document.getElementById('anotherButton');
+  anotherButton.addEventListener('click', function(event) {      
+    location.reload();
+  })
+})
+
+
+
+// Update the Map and Marker
+window.myLocation = function(position){
+    console.log(position) // can be delted
+
+    // Get Latitude and Longitude
+    const nav_lat = position.coords.latitude,
+          nav_lng = position.coords.longitude;
+
+    console.log(nav_lat) // can be delted
+    console.log(nav_lng) // can be delted
+
+    document.getElementById('latitude').textContent =  nav_lat
+    document.getElementById('longitude').textContent =  nav_lng  
+
+    console.log("(Lat - Lng): " + convertDMS(nav_lat, nav_lng));
+    document.getElementById('latlng').textContent = convertDMS(nav_lat, nav_lng);
+
+    map.setView([nav_lat, nav_lng], map.getZoom() ? map.getZoom() : 17);
+    //var marker = L.marker([nav_lat,  nav_lng]).addTo(map)
+    marker.setLatLng([nav_lat, nav_lng]);
+ 
+}
+
+//function error(err) {
+//console.warn(`ERROR(${err.code}): ${err.message}`);
+//}
+
+function error(err)  {
+   // err is a number
+  let errors = {
+    1: 'User denied permission',
+    2: 'Unable to get Geolocation',
+    3: 'Took to long - It timed out'
+  }
+ document.querySelector('h1').textContent = errors[err]
+}
 
 
 
@@ -169,16 +160,7 @@ function convertDMS( lat, lng ) {
   return LatDeg + 'º ' + LatMin + '′ ' + LatSeg + '″' + LatCardinal   + "  -  " + LngDeg + 'º ' + LngMin + '′ ' + LngSeg + '″' + LngCardinal;
 }
 
-
-
-
-
-
-
-
-
-
-
+//})
 
 
 
