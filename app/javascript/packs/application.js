@@ -23,37 +23,12 @@ import '../stylesheets/application'
 // const imagePath = (name) => images(name, true)
 
 
-// Should be used to get user's current location  
-//  window.alerty = function(){
-//    //alert("COMENZAMOS")  
-//   
-//  }
-
-
-
-
-
- // optns ={
-   //   enableHighAccuracy: false, // Do not use GPS as it will drain the battery
-   //   timeout: 5000, // Will respond with an error after 5 seconds of no successful geolocation
-   //   maximumAge: 0 // will not use cached results
-   // }
-
-
-
 console.log("Location JS loaded");
 
- //$(function() {  
-
-// Should be used to get user's current location  
-//  window.alerty = function(){
-//    //alert("COMENZAMOS")  
-//   
-//  }
 let options
 var watchID
 
-// Initialize the map
+// Initialize the map and some properties
 $( document ).on('turbolinks:load', function() {
   
   var tile_layer = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -70,10 +45,11 @@ $( document ).on('turbolinks:load', function() {
     map.setView([0, 0], 2);
 })
 
+// Sets the watchPosition function
 window.setWatch = function() {    
     options ={
-      enableHighAccuracy: false, // Do not use GPS as it will drain the battery
-      timeout: 5000, // Will respond with an error after 5 seconds of no successful geolocation
+      enableHighAccuracy: false, // Do not use GPS as it will drain the battery. If GPS requiered set it to true
+      timeout: 15000, // Will respond with an error after 5 seconds of no successful geolocation
       maximumAge: 0 // will not use cached results
     };
     watchID = navigator.geolocation.watchPosition(myLocation, error, options)
@@ -85,9 +61,7 @@ $( document ).on('turbolinks:load', function() {
   startButton.addEventListener('click', function(event) { 
     setWatch() 
     console.log("START WAS PRESSED")    // can be REMOVED 
-    
-      //myLocation();
-    })
+  })
 
   var stopButton = document.getElementById('stopButton');
   stopButton.addEventListener('click', function(event) {
@@ -101,9 +75,7 @@ $( document ).on('turbolinks:load', function() {
   })
 })
 
-
-
-// Update the Map and Marker
+// Update the Map and Marker to current lcation constantly
 window.myLocation = function(position){
     console.log(position) // can be delted
 
@@ -111,33 +83,22 @@ window.myLocation = function(position){
     const nav_lat = position.coords.latitude,
           nav_lng = position.coords.longitude;
 
-    console.log(nav_lat) // can be delted
-    console.log(nav_lng) // can be delted
+    console.log(nav_lat)  // can be REMOVED
+    console.log(nav_lng)  // can be REMOVED
 
     document.getElementById('latitude').textContent =  nav_lat
     document.getElementById('longitude').textContent =  nav_lng  
 
     console.log("(Lat - Lng): " + convertDMS(nav_lat, nav_lng));
-    document.getElementById('latlng').textContent = convertDMS(nav_lat, nav_lng);
+    document.getElementById('latlng').textContent = convertDMS(nav_lat, nav_lng);  // can be REMOVED
 
     map.setView([nav_lat, nav_lng], map.getZoom() ? map.getZoom() : 17);
-    //var marker = L.marker([nav_lat,  nav_lng]).addTo(map)
     marker.setLatLng([nav_lat, nav_lng]);
  
 }
 
-//function error(err) {
-//console.warn(`ERROR(${err.code}): ${err.message}`);
-//}
-
-function error(err)  {
-   // err is a number
-  let errors = {
-    1: 'User denied permission',
-    2: 'Unable to get Geolocation',
-    3: 'Took to long - It timed out'
-  }
- document.querySelector('h1').textContent = errors[err]
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
 
@@ -160,69 +121,17 @@ function convertDMS( lat, lng ) {
   return LatDeg + 'º ' + LatMin + '′ ' + LatSeg + '″' + LatCardinal   + "  -  " + LngDeg + 'º ' + LngMin + '′ ' + LngSeg + '″' + LngCardinal;
 }
 
-//})
 
 
 
 
 
-
-
-
-
-//onsole.log("Location JS loaded");
-
-///let G, options
-
-///document.addEventListener('DOMContentLoaded', init)
-
-///$( document ).on('turbolinks:load', function(init) {
-/// Set User's current Location
-//indow.init = function(){
-// let G, options
-// if(navigator.geolocation) {
-//   options ={
-//     enableHighAccuracy: false, // Do not use GPS as it will drain the battery
-//     timeout: 5000, // Will respond with an error after 5 seconds of no successful geolocation
-//     maximumAge: 0 // will not use cached results
-//   }
-//   console.log("Geolocation Available")
-
-//   navigator.geolocation.getCurrentPosition(myLocation, postFail, options) 
-//   
-// } else {
-//   postFail(err)
-//   //map.setView([0, 0], 2);
-// } 
-//
-
-//unction myLocation (position) {
-// console.log(position) // can be delted
-
-//     // Get Latitude and Longitude
-//     const nav_lat = position.coords.latitude,
-//         nav_lng = position.coords.longitude;
-
-//     document.getElementById('latitude').textContent =  nav_lat
-//     document.getElementById('longitude').textContent =  nav_lng
-
-//     console.log(nav_lat)
-//     console.log(nav_lng)
-
-//     console.log("(Lat - Lng): " + convertDMS(nav_lat, nav_lng));
-//     document.getElementById('latlng').textContent = convertDMS(nav_lat, nav_lng);
-
-//     map.setView([nav_lat, nav_lng], map.getZoom() ? map.getZoom() : 17);
-//     //var marker = L.marker([nav_lat,  nav_lng]).addTo(map)
-//     marker.setLatLng([nav_lat, nav_lng]);
-//
-
-//(function postFail(err) {
-//   // err is a number
-// let errors = {
-//   1: 'User denied permission',
-//   2: 'Unable to get Geolocation',
-//   3: 'Took to long - It timed out'
+//function error(err)  {
+//  let errors = {
+//    1: 'User denied permission',
+//    2: 'Unable to get Geolocation',
+//    3: 'Took to long - It timed out'
+//  }
+//  //document.querySelector('h1').textContent = errors[err]
+//   console.log(errors[err])
 // }
-// document.querySelector('h1').textContent = errors[err]
-//)
