@@ -56,15 +56,7 @@ $( document ).on('turbolinks:load', function() {
       startPauseButton.classList.add("blueColor")
       startPauseButton.textContent = "Start"
       clearInterval(intervalID);
-    } else {
-      console.log("START WAS PRESSED") // can be REMOVED
-      startPauseButton.textContent = "Pause"
-      startPauseButton.classList.add("yellowColor")
-      intervalID = setInterval(function () {
-        myLocation() ;
-        sendLocation();
-        }, 3000); 
-    }
+    } 
   })
 
   var anotherButton = document.getElementById('anotherButton');
