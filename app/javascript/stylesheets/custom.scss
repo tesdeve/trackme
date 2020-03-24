@@ -3,7 +3,6 @@
   width: 600px;
 }
 
-
 .card {
   margin-left: 30%;
   margin-right: 30%;
@@ -20,12 +19,6 @@
   font-weight: bold;
 }
 
-#log {
-  margin-top: 20px;
-  margin-bottom: 60px;
-  font-size: 1.2rem !important;
-}
-
 .greenColor {
   background-color: #2da71c !important;
   border-color: #2da71c !important;
@@ -33,37 +26,19 @@
   margin-left: 20px;
 }
 
-#startPauseButton{
+#startPauseButton {
   width: 70%;
 }
 
-/*#startStopButton{
-  width: 70%;
-}*/
-
-.yellowColor{
+.yellowColor {
   background-color: #f7ff00 !important;
-  border-color: #f7ff00 !important;
   color: black !important;
+  border-color: #9e9e7d !important;
 }
-
-.redColor{
-  background-color: red!important;
-  border-color: red !important;
-  color: black !important;
-}
-
 .blueColor {
   background-color: #0069d9 !important;
   border-color: #0069d9 !important;
   color: white !important;
-}
-.hide {
-  display:none !important;
-}
-
-.show {
-  display:block !important;
 }
 
 
@@ -71,20 +46,17 @@
 /* ================  MEDIA QUERIES - PORTRAIT ============== */
 /* ========================================================= */
 
-
 @media (max-width: 992px) and (orientation : portrait) { 
 
 
 
 }
-
 /* ========================================================= */
 
 @media (max-width: 767px) and (orientation : portrait) {
 
 
 }
-
 /* ========================================================= */
 
 @media (max-width: 576px) and (orientation : portrait) {
@@ -108,7 +80,6 @@
 
   }
 }
-
 /* =============================================================== */
 /* ===================MEDIA QUERIES - LANDSCAPE ================== */
 /* =============================================================== */
@@ -116,8 +87,6 @@
 @media (max-width:800px) and (min-width:400px) {
 
 }
-
-
 @media (min-width:802px) and (max-width:1200px) {
 
     

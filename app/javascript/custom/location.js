@@ -59,7 +59,7 @@ $( document ).on('turbolinks:load', function() {
     } else {
       console.log("START WAS PRESSED") // can be REMOVED
       startPauseButton.textContent = "Pause"
-      startPauseButton.classList.add("yellow")
+      startPauseButton.classList.add("yellowColor")
       intervalID = setInterval(function () {
         myLocation() ;
         sendLocation();
