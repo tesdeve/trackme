@@ -3,7 +3,6 @@
   width: 600px;
 }
 
-
 .card {
   margin-left: 30%;
   margin-right: 30%;
@@ -20,12 +19,6 @@
   font-weight: bold;
 }
 
-#log {
-  margin-top: 20px;
-  margin-bottom: 60px;
-  font-size: 1.2rem !important;
-}
-
 .greenColor {
   background-color: #2da71c !important;
   border-color: #2da71c !important;
@@ -37,35 +30,18 @@
   width: 70%;
 }
 
-/*#startStopButton{
-  width: 70%;
-}*/
-
 .yellowColor{
   background-color: #f7ff00 !important;
-  border-color: #f7ff00 !important;
+  border-color: #9e9e7d !important;
   color: black !important;
 }
 
-.redColor{
-  background-color: red!important;
-  border-color: red !important;
-  color: black !important;
-}
 
 .blueColor {
   background-color: #0069d9 !important;
   border-color: #0069d9 !important;
   color: white !important;
 }
-.hide {
-  display:none !important;
-}
-
-.show {
-  display:block !important;
-}
-
 
 /* ========================================================= */
 /* ================  MEDIA QUERIES - PORTRAIT ============== */
