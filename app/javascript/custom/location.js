@@ -51,7 +51,7 @@ $( document ).on('turbolinks:load', function() {
         sendLocation();
         }, 3000); 
     } else if  (startPauseButton.textContent === "Pause") {
-      console.log("STOP WAS PRESSED") // can be REMOVED
+      console.log("PAUSE WAS PRESSED") // can be REMOVED
       startPauseButton.classList.remove("yellowColor")
       startPauseButton.classList.add("blueColor")
       startPauseButton.textContent = "Start"
