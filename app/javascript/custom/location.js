@@ -58,10 +58,9 @@ $( document ).on('turbolinks:load', function() {
 })
 
 // Update the Map and Marker to current lcation constantly
-window.myLocation = function(position){
-  console.log(position) // can be delted
-
+window.myLocation = function(){
   navigator.geolocation.getCurrentPosition(function(position){ 
+    console.log(position) // can be delted
 
     // Get Latitude and Longitude
     const nav_lat = position.coords.latitude,
