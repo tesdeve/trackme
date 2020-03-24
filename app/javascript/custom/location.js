@@ -31,24 +31,40 @@ window.sendLocation = function(){
 }
 
 
-// Functions that listen for click on start/stop Buttons and orquestrate the app
+// Listening for click on Start/Pause Button and orquestrate the app
 $( document ).on('turbolinks:load', function() {
+  var startPauseButton = document.getElementById('startPauseButton') 
+  startPauseButton.textContent = "Start"
 
-//Adds event listener to the click on startStopButton
-  var startButton = document.getElementById('startButton')    
-  startButton.addEventListener('click', function (event) { 
-    console.log("START WAS PRESSED")    // can be REMOVED    
+
+
+  //Adds event listener to the click on Start Button
+  startPauseButton.addEventListener('click', function (event) { 
+
+    if (startPauseButton.textContent === "Start") {
+      console.log("START WAS PRESSED") // can be REMOVED
+      startPauseButton.classList.remove("blueColor")
+      startPauseButton.textContent = "Pause"
+      startPauseButton.classList.add("yellowColor")
       intervalID = setInterval(function () {
         myLocation() ;
         sendLocation();
-        }, 3000);    
-    })
-
-
-  var stopButton = document.getElementById('stopButton');
-  stopButton.addEventListener('click', function(event) {
-    console.log("STOP WAS PRESSED") // can be REMOVED
-    clearInterval(intervalID);
+        }, 3000); 
+    } else if  (startPauseButton.textContent === "Pause") {
+      console.log("STOP WAS PRESSED") // can be REMOVED
+      startPauseButton.classList.remove("yellowColor")
+      startPauseButton.classList.add("blueColor")
+      startPauseButton.textContent = "Start"
+      clearInterval(intervalID);
+    } else {
+      console.log("START WAS PRESSED") // can be REMOVED
+      startPauseButton.textContent = "Pause"
+      startPauseButton.classList.add("yellow")
+      intervalID = setInterval(function () {
+        myLocation() ;
+        sendLocation();
+        }, 3000); 
+    }
   })
 
   var anotherButton = document.getElementById('anotherButton');
@@ -56,6 +72,7 @@ $( document ).on('turbolinks:load', function() {
     location.reload();
   })
 })
+
 
 // Update the Map and Marker to current lcation constantly
 window.myLocation = function(){
@@ -104,4 +121,9 @@ function convertDMS( lat, lng ) {
    
   return LatDeg + 'º ' + LatMin + '′ ' + LatSeg + '″' + LatCardinal   + "  -  " + LngDeg + 'º ' + LngMin + '′ ' + LngSeg + '″' + LngCardinal;
 }
+
+
+
+
+
 

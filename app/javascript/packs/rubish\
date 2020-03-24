@@ -1,3 +1,39 @@
+
+
+////////// ALL WITH ONE BUTTON ///////////////////////////////////
+
+// Listening for click on Start/Pause Button and orquestrate the app
+$( document ).on('turbolinks:load', function() {
+  var startStopButton = document.getElementById('startStopButton') 
+  startStopButton.textContent = "Start"
+  //Adds event listener to the click on Start Button
+  startStopButton.addEventListener('click', function (event) { 
+
+    if (startStopButton.textContent === "Start") {
+      console.log("START WAS PRESSED") // can be REMOVED
+      startStopButton.textContent = "Stop"
+      startStopButton.classList.add("redColor")
+      intervalID = setInterval(function () {
+        myLocation() ;
+        sendLocation();
+        }, 3000); 
+    } else if  (startStopButton.textContent === "Stop") {
+      console.log("STOP WAS PRESSED") // can be REMOVED
+      startStopButton.classList.add("blueColor")
+      startStopButton.textContent = "Start"
+      clearInterval(intervalID);
+    }
+  })
+
+  var anotherButton = document.getElementById('anotherButton');
+  anotherButton.addEventListener('click', function(event) {      
+    location.reload();
+  })
+})
+
+
+
+
 ////////////////////////////////////  GOOD STARTING BASE - PUSH LOCATION COORDINATES TO SERVER THROUGH JS ///////////////////////////////////
 
 
@@ -685,7 +721,7 @@ window.setWatch = function() {
     watchID = navigator.geolocation.watchPosition(myLocation, error, options)
 }
 
-// Functions that listen for click on start/stop Buttons and orquestrate the app
+// Functions that listen for click on  Buttons and orquestrate the app
 $( document ).on('turbolinks:load', function() {
   var startButton = document.getElementById('startButton'); 
   startButton.addEventListener('click', function(event) { 
