@@ -1,3 +1,4 @@
+
 import consumer from "./consumer"
 
 window.latlng =  consumer.subscriptions.create("LocationsChannel", {
