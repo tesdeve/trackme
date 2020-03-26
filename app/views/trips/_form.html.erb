@@ -12,7 +12,7 @@
   <% end %>
 <div class="card">
   <div class="card-title text-center">
-      <% if !current_page?(controller: 'trips', action: 'new' ) %>
+      <% if !current_page?(root_path) %>
          <h1> Editing Trip </h1>  
      <% else%>
        <h1> New Trip </h1>
