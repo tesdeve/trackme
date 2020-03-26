@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Trip Number:</strong>
+  <%= @trip.id %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @location.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @location.longitude %>
+</p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @location.start_time %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @location.end_time %>
+</p>
+
+<%= link_to 'Edit',  edit_trip_location_path(@trip, @location) %> |
+<%= link_to 'Back', trip_locations_path(@trip) %>

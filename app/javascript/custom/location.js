@@ -75,9 +75,19 @@ window.myLocation = function(){
     const nav_lat = position.coords.latitude,
           nav_lng = position.coords.longitude;
 
-    console.log(nav_lat)  // can be REMOVED
-    console.log(nav_lng)  // can be REMOVED
+    // const formLatitude = 'trip_locations_attributes_0_latitude' 
+    // const formLongitude = 'trip_locations_attributes_0_longitude'
 
+    const formLatitude = 'location_latitude' 
+    const formLongitude = 'location_longitude'     
+
+    console.log("latitude:" + nav_lat)  // can be REMOVED
+    console.log("longitude:" + nav_lng)  // can be REMOVED
+
+    document.getElementById(formLatitude).value =  nav_lat
+    document.getElementById(formLongitude).value =   nav_lng 
+
+    //For Testing this can be left but needs to be removed in orther to be able to see the map
     document.getElementById('latitude').textContent =  nav_lat
     document.getElementById('longitude').textContent =  nav_lng  
 
