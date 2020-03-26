@@ -1,0 +1,80 @@
+<%= form_with(model: location, url: [@trip, location], local: true) do |form| %>
+  <% if location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(location.errors.count, "error") %> prohibited this location from being saved:</h2>
+
+      <ul>
+        <% location.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="card">
+  <div class="card-title text-center">
+      <% if current_page?(controller: 'locations', action: 'new' ) %>
+        <h1> New Location </h1>
+      <% elsif current_page?(controller: 'locations',  action: 'edit' ) %>
+        <h1> Editing Location </h1>
+      <% end %>
+  </div>
+  <!-- <br>
+   <button id='anotherButton' type="button" class="btn btn-primary stopButton greenColor mb-5 mt-5 "> New Reading</button>
+  <br> -->
+  
+  <div class="card-body">
+
+  <div class="field">
+    <%= form.label :trip_id %>
+    <%= form.number_field :trip_id, value: @trip.id %>  
+
+  <div class="field">
+    <%= form.label :latitude %>
+    <%= form.text_field :latitude%>
+  </div>
+
+  <div class="field">
+    <%= form.label :longitude %>
+    <%= form.text_field :longitude %>
+  </div>
+
+  <div class="field">
+    <%= form.label :start_time %>
+    <%= form.datetime_select :start_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :end_time %>
+    <%= form.datetime_select :end_time %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+
+<div>
+  Latitude = <span id='latitude'></span>&deg;
+<br>
+   Longitude = <span id='longitude'></span>&deg;
+<br>
+</div>
+
+
+
+    <p>DB logs: 
+      <span id="db_log">0</span>
+    </p>
+<div>
+<span id="latlng">0 0</span>
+</div>
+<br>
+<div id='trackmap'></div>
+<%= javascript_tag do %>
+var map = L.map('trackmap');
+var marker = L.marker([0, 0]).addTo(map)
+<% end %>
+
+</div>
+</div>

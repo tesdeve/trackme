@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+<br>
+<br>
+<p>
+  <strong>Trip Number:</strong>
+  <%= @trip.id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @trip.name.present? ? @trip.name : "None given" %>
+</p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @trip.start_time %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @trip.end_time %>
+</p>
+
+
+<%= link_to 'Locations', trip_locations_path(@trip) %> |
+<br>
+<br>
+<%= link_to 'Edit', edit_trip_path(@trip) %> |
+<%= link_to 'Trips', trips_path %>
+
+
