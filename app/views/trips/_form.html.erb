@@ -11,7 +11,9 @@
     </div>
   <% end %>
 <div class="card">
-  <div class="card-title text-center">
+
+  
+    <div class="card-title text-center">
       <% if !current_page?(controller: 'trips', action: 'new' ) %>
          <h1> Editing Trip </h1>  
      <% else%>
@@ -29,7 +31,7 @@
         <%= form.text_field :trip_id, value: @trip.id %> 
       </div>
      <% end %>
-      
+
 
     <div class="field">
       <%= form.label :name%>

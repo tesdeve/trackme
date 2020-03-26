@@ -4,7 +4,8 @@ Rails.application.routes.draw do
     resources :locations
   end
 
-  root 'trips#new'   
+  root 'trips#index'   
   #get "static_pages/home"
   
 end
+
