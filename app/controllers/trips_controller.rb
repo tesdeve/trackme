@@ -71,7 +71,7 @@ class TripsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def trip_params
-      params.require(:trip).permit(:name, :start_time, :end_time, :paused, :finished, 
-    locations_attributes: [ :id, :latitude, :longitude, :start_time, :end_time ])
+      params.require(:trip).permit(:id, :name, :start_time, :end_time, :paused, :finished, 
+    locations_attributes: [ :id, :latitude, :longitude, :logged_at])
     end
 end

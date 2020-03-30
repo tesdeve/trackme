@@ -1,4 +1,111 @@
 
+////////////////////Checkking Data Sent  ////////////////////////////
+
+// latlng.send_location(3, position.coords.latitude, position.coords.longitude)
+// It shoul be done on console like
+
+latlng.send_location(3, 50, -1)
+//with datetime
+latlng.send_location(1, 50.22, -1.44, 20200330) // the time will pull automatically
+
+
+
+
+
+
+
+//////////////////// SOme code that helps to get the Lat, Lng values as an array //////////////////
+
+
+
+var obj = {
+    10: 'aa',
+    11: 'bb'
+};
+
+var array = Object.keys( obj ).map(function( name ) {
+    return [ +name ? +name : name, obj[ name ] ];
+}).reduce(function( a, b ) {
+    return a.concat(b);
+});
+
+
+
+
+
+
+var lab =["1","2","3"];
+var val = [42,55,51,22];
+var data = [];
+for(var i=0; i<4; i++)  {
+    data.push({label: lab[i], value: val[i]});
+}
+
+
+var locZero = locations[0]
+var lat = locZero.latitude
+var lng = locZero.longitude
+// I might need this to make it sting => constructor.toString() or .toString()   https://www.w3schools.com/js/tryit.asp?filename=tryjs_array_isarray
+
+
+var text = '{"employees":[' +
+'{"firstName":"John","lastName":"Doe" },' +
+'{"firstName":"Anna","lastName":"Smith" },' +
+'{"firstName":"Peter","lastName":"Jones" }]}';
+
+obj = JSON.parse(text);
+
+
+var i;
+for (i = 0; i < text.length; i++) {
+  document.getElementById("demo").innerHTML +=
+  obj.employees[i].firstName + " " + obj.employees[i].lastName + "<br>";
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////// IMPORTANT CODE TO BE RUN WHEN DATA IS PUT ON JSON TO BE READ //////////////////
+<h2>Create Object from JSON String</h2>
+
+<p id="demo"></p>
+
+<script>
+var text = '{"employees":[' +
+'{"firstName":"John","lastName":"Doe" },' +
+'{"firstName":"Anna","lastName":"Smith" },' +
+'{"firstName":"Peter","lastName":"Jones" }]}';
+
+obj = JSON.parse(text);
+
+
+var i;
+for (i = 0; i < text.length; i++) {
+  document.getElementById("demo").innerHTML +=
+  obj.employees[i].firstName + " " + obj.employees[i].lastName + "<br>";
+} 
+</script>
+
+Result:
+
+Create Object from JSON String
+
+John Doe
+Anna Smith
+Peter Jones
+
 
 ////////// ALL WITH ONE BUTTON ///////////////////////////////////
 

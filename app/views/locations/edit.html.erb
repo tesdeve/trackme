@@ -1,4 +1,4 @@
 <%= render 'form', location: @location %>
 
-<%= link_to 'Show', @location %> |
-<%= link_to 'Back', locations_path %>
+<%= link_to 'Show', trip_location_path(@trip, @location) %> |
+<%= link_to 'Back', trip_locations_path(@trip) %>

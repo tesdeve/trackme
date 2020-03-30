@@ -18,8 +18,8 @@ window.latlng =  consumer.subscriptions.create("LocationsChannel", {
         console.log('Notification Received: ' + data);
   },
 
- send_location(lat, lng){
-    this.perform("send_location", { lat: lat, lng: lng })
+ send_location( trip_id, lat, lng, logged_at ){
+    this.perform("send_location", { trip_id: trip_id, latitude: lat, longitude: lng, logged_at: logged_at })
   }
   
 })
