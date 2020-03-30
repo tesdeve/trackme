@@ -2,6 +2,8 @@
 
 <h1>Locations</h1>
 <br>
+<div>
+<h3>Total Locations: <%= @locations.count %> </h3> 
 
 <%= link_to 'New Location', new_trip_location_path(@trip) %> 
 <br>
@@ -12,11 +14,10 @@
     <table class='locationsTable'>
       <thead>
         <tr>
-          <th >Trip Number</th> 
+          <th>Trip Number</th> 
           <th>Latitude</th>
           <th>Longitude</th>
-          <th>Start time</th>
-          <th>End time</th>
+          <th>Logged At</th>
           <th colspan="3"></th>
         </tr>
       </thead>
@@ -27,11 +28,14 @@
             <td><%= location.trip_id%></td>
             <td><%= location.latitude %></td>
             <td><%= location.longitude %></td>
-            <td><%= location.start_time.strftime('%d %b %Y %H:%M')  %></td>
-            <td><%= location.end_time.strftime('%d %b %Y %H:%M')  %></td>
-            <td><%= link_to 'Show', trip_location_path(@trip, location) %></td>
-            <td><%= link_to 'Edit', edit_trip_location_path(@trip, location) %></td>
-            <td><%= link_to 'Destroy', trip_location_path(@trip, location), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            
+            <td><%= location.logged_at.strftime('%d %b %Y %H:%M')  %></td>
+             <!-- This actions will be implememted ( 2 BE REMOVED) when the user is added  MAKE IT ERROR 
+
+            <td><%#= link_to 'Show', trip_location_path(@trip, location) %></td>           
+            <td><%#= link_to 'Edit', edit_trip_location_path(@trip, location) %></td> 
+            <td><%#= link_to 'Destroy', trip_location_path(@trip, location), method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+
           </tr>
         <% end %>
       </tbody>
@@ -55,3 +59,34 @@
 <br>
 <br>
 <br>
+<div>
+  <h1> Data From DataBase</h1>
+<%#= content_tag "div", id: "locations", data: {url: @locations} do %>
+
+<div id = 'locations'>
+  </div>
+ 
+<div id = 'locations2'>
+  </div>
+
+<%# end  %>
+  <span id="dataFromDB"></span>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+</div>
+
+    <p>DB logs: 
+      <span id="db_log">0</span>
+    </p>
+<div>
+<span id="latlng">0 0</span>
+</div>
+<br>
+<div id='trackmap'></div>
+<%= javascript_tag do %>
+var map = L.map('trackmap');
+var marker = L.marker([0, 0]).addTo(map)
+<% end %>

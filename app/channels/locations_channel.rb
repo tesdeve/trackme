@@ -9,5 +9,7 @@ class LocationsChannel < ApplicationCable::Channel
 
   def send_location(data)
     puts data
+   # CREATE un white list
+    Location.create(data.slice("run_id", "latitude", "longitude", "logged_at" ))
   end
 end

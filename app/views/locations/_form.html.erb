@@ -26,7 +26,7 @@
 
   <div class="field">
     <%= form.label :trip_id %>
-    <%= form.number_field :trip_id, value: @trip.id %>  
+    <%= form.text_field :trip_id, value: @trip.id %>  
 
   <div class="field">
     <%= form.label :latitude %>
@@ -39,13 +39,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :start_time %>
-    <%= form.datetime_select :start_time %>
-  </div>
-
-  <div class="field">
-    <%= form.label :end_time %>
-    <%= form.datetime_select :end_time %>
+    <%= form.label :logged_at %>
+    <%= form.datetime_select :logged_at%>
   </div>
 
   <div class="actions">
@@ -55,20 +50,10 @@
 
 
 <div>
-  Latitude = <span id='latitude'></span>&deg;
-<br>
-   Longitude = <span id='longitude'></span>&deg;
-<br>
+  <span id="latlng"> </span>
 </div>
 
 
-
-    <p>DB logs: 
-      <span id="db_log">0</span>
-    </p>
-<div>
-<span id="latlng">0 0</span>
-</div>
 <br>
 <div id='trackmap'></div>
 <%= javascript_tag do %>

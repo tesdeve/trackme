@@ -1,12 +1,13 @@
 class LocationsController < ApplicationController
   before_action :set_location, only: [:show, :edit, :update, :destroy]
   before_action :set_trip
+  
   # GET /locations
   # GET /locations.json
   def index
     @locations =  @trip.locations
-    
-    #@locations = Location.all
+    locations =  @trip.locations.select('id', 'trip_id', 'latitude', 'longitude', 'logged_at')
+    gon.locations = locations
   end
 
   # GET /locations/1
@@ -26,17 +27,21 @@ class LocationsController < ApplicationController
   # POST /locations
   # POST /locations.json
   def create
-    @location = Location.new(location_params)
+    #if @trip.finished == false
+      @location = Location.new(location_params)
 
-    respond_to do |format|
-      if @location.save
-        format.html { redirect_to trip_location_path(@trip, @location), notice: 'Location was successfully created.' }
-        format.json { render :show, status: :created, location: @location }
-      else
-        format.html { render :new }
-        format.json { render json: @location.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @location.save
+          format.html { redirect_to trip_location_path(@trip, @location), notice: 'Location was successfully created.' }
+          format.json { render :show, status: :created, location: @location }
+        else
+          format.html { render :new }
+          format.json { render json: @location.errors, status: :unprocessable_entity }
+        end
       end
-    end
+    #else
+    #  redirect_to trips_path
+    #end
   end
 
   # PATCH/PUT /locations/1
@@ -44,7 +49,7 @@ class LocationsController < ApplicationController
   def update
     respond_to do |format|
       if @location.update(location_params)
-        format.html { redirect_to @location, notice: 'Location was successfully updated.' }
+        format.html { redirect_to trip_location_path(@trip, @location), notice: 'Location was successfully updated.' }
         format.json { render :show, status: :ok, location: @location }
       else
         format.html { render :edit }
@@ -58,7 +63,7 @@ class LocationsController < ApplicationController
   def destroy
     @location.destroy
     respond_to do |format|
-      format.html { redirect_to locations_url, notice: 'Location was successfully destroyed.' }
+      format.html { redirect_to trip_locations_path(@trip), notice: 'Location was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -72,8 +77,10 @@ class LocationsController < ApplicationController
     def set_trip
       @trip= Trip.find(params[:trip_id])
     end
+
+
     # Only allow a list of trusted parameters through.
     def location_params
-      params.require(:location).permit(:trip_id, :latitude, :longitude, :start_time, :end_time)
+      params.require(:location).permit(:trip_id, :latitude, :longitude, :logged_at)
     end
 end

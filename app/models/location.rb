@@ -2,16 +2,23 @@ class Location < ApplicationRecord
 
   belongs_to :trip
 
+  before_create :check_fineshed
+  after_initialize :init
 
-  def set_initialise
+  def init
+    self.logged_at ||= DateTime.now
   end
 
-  def set_start_time
-  end
-
-  def set_end_time
+  def check_fineshed  
+    self.trip.finished == false 
+    puts("")
+    puts("")
+    puts (self.trip.finished )  
+    puts("")
+    puts("")
   end
   
+
 end
 
 

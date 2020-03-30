@@ -23,7 +23,7 @@ $( document ).on('turbolinks:load', function() {
 // Send location to Server
 window.sendLocation = function(){
   navigator.geolocation.getCurrentPosition(function(position){
-    latlng.send_location(position.coords.latitude, position.coords.longitude);
+    latlng.send_location(trip_id, position.coords.latitude, position.coords.longitude, looged_at); //looged_at. Halar el trip_id
     const num = Number(document.getElementById('db_log').textContent) + 1;
     document.getElementById('db_log').textContent = num;
     console.log('Send location to DataBase # ' + num);
@@ -33,6 +33,7 @@ window.sendLocation = function(){
 
 // Listening for click on Start/Pause Button and orquestrate the app
 $( document ).on('turbolinks:load', function() {
+  locations();
   var startPauseButton = document.getElementById('startPauseButton') 
   startPauseButton.textContent = "Start"
 
@@ -75,21 +76,14 @@ window.myLocation = function(){
     const nav_lat = position.coords.latitude,
           nav_lng = position.coords.longitude;
 
-    // const formLatitude = 'trip_locations_attributes_0_latitude' 
-    // const formLongitude = 'trip_locations_attributes_0_longitude'
-
     const formLatitude = 'location_latitude' 
     const formLongitude = 'location_longitude'     
 
     console.log("latitude:" + nav_lat)  // can be REMOVED
     console.log("longitude:" + nav_lng)  // can be REMOVED
 
-    document.getElementById(formLatitude).value =  nav_lat
-    document.getElementById(formLongitude).value =   nav_lng 
-
-    //For Testing this can be left but needs to be removed in orther to be able to see the map
-    document.getElementById('latitude').textContent =  nav_lat
-    document.getElementById('longitude').textContent =  nav_lng  
+   document.getElementById(formLatitude).value =  nav_lat
+   document.getElementById(formLongitude).value =   nav_lng 
 
     console.log("(Lat - Lng): " + convertDMS(nav_lat, nav_lng));
     document.getElementById('latlng').textContent = convertDMS(nav_lat, nav_lng);  // can be REMOVED
@@ -103,7 +97,6 @@ window.myLocation = function(){
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }
-
 
 
 function convertDMS( lat, lng ) { 
@@ -123,6 +116,53 @@ function convertDMS( lat, lng ) {
    
   return LatDeg + 'º ' + LatMin + '′ ' + LatSeg + '″' + LatCardinal   + "  -  " + LngDeg + 'º ' + LngMin + '′ ' + LngSeg + '″' + LngCardinal;
 }
+
+
+// Fuction that get all Locations and filter them getting only the Latituda nd Longitude
+window.locations = function(){
+  var i
+  var data = []
+  var data2 = []
+
+  var locations = gon.locations
+
+  
+    //document.getElementById('locations2').innerHTML = data2
+    var data3 = locations.map(c => [c.latitude, c.longitude])
+
+    var polyline = L.polyline(data3, {color: 'red'}).addTo(map)
+    map.fitBounds(polyline.getBounds())
+
+}
+
+
+
+
+//var data2 = [[52.0623807,-1.3389535], [52.0632085,-1.3415552,]]
+
+
+// data.push({lats, lngs});
+   // data2.push([lats, lngs]);
+   // //console.log(lat)
+   // //console.log(lng)
+   // console.log(data2)
+
+   //var locationColected = JSON.stringify(data2, null, 4)
+   //var latlngs = parseFloat(locationColected);
+   //console.log(latlngs);
+   //document.getElementById('locations2').innerHTML = latlngs
+
+   //var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map)
+   // //map.fitBounds(polyline.getBounds())
+
+
+   // document.getElementById('locations').textContent  = data
+    // document.getElementById('locations').textContent  = data2
+    //document.getElementById('locations').innerHTML = JSON.stringify(data, null, 4);
+   
+    //     // zoom the map to the polyline
+    
+
 
 
 
