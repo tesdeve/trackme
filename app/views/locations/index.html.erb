@@ -5,7 +5,7 @@
 <div>
 <h3>Total Locations: <%= @locations.count %> </h3> 
 
-<%= link_to 'New Location', new_trip_location_path(@trip) %> 
+<%#= link_to 'New Location', new_trip_location_path(@trip) %> 
 <br>
 <br>
 <br>
@@ -48,7 +48,7 @@
 <br>
 <br>
 
-<%= link_to 'New Location', new_trip_location_path(@trip) %> 
+<%#= link_to 'New Location', new_trip_location_path(@trip), :id => "newLocation" %> 
 <br>
 <br>
 <br>
@@ -78,15 +78,37 @@
   <br>
 </div>
 
-    <p>DB logs: 
+    <p>DB logs33: 
       <span id="db_log">0</span>
     </p>
 <div>
 <span id="latlng">0 0</span>
 </div>
 <br>
-<div id='trackmap'></div>
+
+
+
+  <div class="d-flex justify-content-center"">  
+    <div id='map'></div>
+  </div>
+</div>
+
 <%= javascript_tag do %>
-var map = L.map('trackmap');
-var marker = L.marker([0, 0]).addTo(map)
+var map1 = L.map('map').setView([0, 0], 2); <!-- JUSt to set UP the map-->
+trackedMapLayers()
+locations()
+
+
 <% end %>
+
+
+
+ <br>
+  <br>
+  <br>
+  <br>
+
+
+
+
+

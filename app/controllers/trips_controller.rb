@@ -3,20 +3,30 @@ class TripsController < ApplicationController
 
   # GET /trips
   # GET /trips.json
+
+
   def index
-    @trips = Trip.all
+    @trips =  Trip.all
+    gon.trips = @trips
+
+    #locations =  @trip.locations #.select('id', 'trip_id', 'latitude', 'longitude', 'logged_at')
+   
   end
 
-  # GET /trips/1
-  # GET /trips/1.json
+  # GET /locations/1
+  # GET /locations/1.json
   def show
+    gon.trip = @trip
+    gon.trip.locations = @trip.locations
   end
 
-  # GET /trips/new
+  # GET /locations/new
   def new
     @trip = Trip.new
-    #@trip.locations.build
+    #location =  @trip.location
+    gon.trip = @trip
   end
+
 
   # GET /trips/1/edit
   def edit
@@ -44,8 +54,8 @@ class TripsController < ApplicationController
   def update
     respond_to do |format|
       if @trip.update(trip_params)
-        format.html { redirect_to @trip, notice: 'Trip was successfully updated.' }
-        format.json { render :show, status: :ok, location: @trip }
+        format.html { redirect_to root_path, notice: 'Trip was successfully updated.' }
+        format.json { render :show, status: :ok, location: root_path }
       else
         format.html { render :edit }
         format.json { render json: @trip.errors, status: :unprocessable_entity }
@@ -71,7 +81,7 @@ class TripsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def trip_params
-      params.require(:trip).permit(:id, :name, :start_time, :end_time, :paused, :finished, 
-    locations_attributes: [ :id, :latitude, :longitude, :logged_at])
+      params.require(:trip).permit(:id, :name, :start_time, :end_time, :paused, :finished)  
+    #locations_attributes: [ :id, :latitude, :longitude, :logged_at]
     end
 end

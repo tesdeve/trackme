@@ -6,7 +6,7 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def index
     @locations =  @trip.locations
-    locations =  @trip.locations.select('id', 'trip_id', 'latitude', 'longitude', 'logged_at')
+    locations =  @trip.locations #.select('id', 'trip_id', 'latitude', 'longitude', 'logged_at')
     gon.locations = locations
   end
 
@@ -18,6 +18,8 @@ class LocationsController < ApplicationController
   # GET /locations/new
   def new
     @location = Location.new
+    #location =  @trip.locations.new
+    #gon.location = location
   end
 
   # GET /locations/1/edit

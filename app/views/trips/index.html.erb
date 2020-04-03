@@ -17,8 +17,10 @@
       <tr>
         <td><%= trip.id %></td>
         <td><%= trip.start_time.strftime('%d %b %Y %H:%M')  %></td>
-        <td><%= trip.end_time.strftime('%d %b %Y %H:%M')  %></td>
-        <td><%= link_to 'Show', trip %></td>
+        <td><%#= trip.end_time.strftime('%d %b %Y %H:%M')  %></td>
+        <!-- <td><%#= link_to 'Show', trip %></td> -->
+        <td><%= link_to 'Show', trip_locations_path(trip) %></td>
+
 
         <!-- This action will be implememted ( 2 BE REMOVED) when the user is added  MAKE IT ERROR 
         <td><%#= link_to 'Edit', edit_trip_path(trip) %></td> -->
@@ -31,3 +33,21 @@
 <br>
 
 <%= link_to 'New Trip', new_trip_path %>
+
+
+<br>
+<br>
+<br>
+<br>
+
+<% @trips.each do |trip| %>
+  <%= link_to trip, {style: "text-decoration:none" } do %>
+    <%= render 'mapCard', trip: trip %>
+  <% end %>
+<% end %>
+
+
+<br>
+<br>
+<br>
+<br>

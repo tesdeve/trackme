@@ -1,32 +1,135 @@
 <p id="notice"><%= notice %></p>
-<br>
-<br>
-<p>
-  <strong>Trip Number:</strong>
-  <%= @trip.id %>
-</p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @trip.name.present? ? @trip.name : "None given" %>
-</p>
+<div class="card">
+  <div class="centeButton text-center mb-5"> 
 
-<p>
-  <strong>Start time:</strong>
-  <%= @trip.start_time %>
-</p>
-
-<p>
-  <strong>End time:</strong>
-  <%= @trip.end_time %>
-</p>
+<% if @trip.finished == (false || nil) %>
+  <%= form_with(model: @trip, local: true) do |form| %>
+    <%= form.hidden_field :finished, :value => true %>  
+    <%= form.hidden_field :end_time, :value => DateTime.now %>  
+    <%#= link_to 'Stop',root_path , :id =>'stopTracking', :class => "btn btn-primary redColor mb-2 mt-2" %> 
+    <%= form.submit 'Stop Tracking', name: 'stopTracking', id: "stopTracking", :class => "btn btn-primary redColor mb-2 mt-2"  %>
+  <% end %>
+ <%= render 'trip', trip: @trip %>
 
 
-<%= link_to 'Locations', trip_locations_path(@trip) %> |
-<br>
-<br>
- <!-- This actions will be implememted ( 2 BE REMOVED) when the user is added  MAKE IT ERROR 
-<%#= link_to 'Edit', edit_trip_path(@trip) %> --> 
-<%= link_to 'Trips', trips_path %>
+
+  <!-- render tracking  -->
+  <!-- <div class="d-flex justify-content-center mb-3"">  
+    <div id='trackmap'></div>
+  </div>
+ -->
+  
 
 
+  </div>
+    <br>
+
+ <div class="d-flex justify-content-center"">  
+    <div id='trackingMap'></div>
+  </div>
+</div>
+<%= javascript_tag do %>
+  var map = L.map('trackingMap');
+  var marker = L.marker([0, 0]).addTo(map);
+  initLayers()
+  initialLocation() 
+<% end %>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% else %>
+
+
+
+
+  <%= link_to 'Trips', trips_path %> <!-- Just for testing -->
+  <br>
+  <h3 class="mt-4"> Your Completed Trip </h3>
+
+  <%= render 'trip', trip: @trip %>
+    <br>
+    <br>
+  <%= link_to 'Locations', trip_locations_path(@trip), :id => "tripLocations"  %> <!-- 2 B Removed -->
+    <br>
+    <br>
+
+<div class="d-flex justify-content-center mb-3"">  
+    <div id='trackmap'></div>
+  </div>
+
+  <%= javascript_tag do %>
+    var map = L.map('trackmap');
+    var marker = L.marker([0, 0]).addTo(map);
+  <% end %>
+<% end %>
+
+    
+    <br>
+    <br>
+  </div>
+
+  
+
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
