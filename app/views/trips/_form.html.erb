@@ -1,3 +1,5 @@
+<div class="primerForm">
+
 <%= form_with(model: trip, local: true) do |form| %>
   <% if trip.errors.any? %>
     <div id="error_explanation">
@@ -10,96 +12,65 @@
       </ul>
     </div>
   <% end %>
-<div class="card">
 
+  <div class="card">
+  <div class="card-title text-center">
+      <h1> Ready to Track </h1>
+  </div>
   
-    <div class="card-title text-center">
-      <% if !current_page?(controller: 'trips', action: 'new' ) %>
-         <h1> Editing Trip </h1>  
-     <% else%>
-       <h1> New Trip </h1>
-      <% end %>
-  </div>
-  <!-- <br>
-   <button id='anotherButton' type="button" class="btn btn-primary stopButton greenColor mb-5 mt-5 "> New Reading</button>
-  <br> -->
+  <%= form.hidden_field :start_time, :value => DateTime.now %>
+
+
   <div class="card-body">
-    <% if current_page?(controller: 'trips',  action: 'new' ) %>
-    <% else %>
-      <div class="field">
-        <%= form.label :trip_number%>
-        <%= form.text_field :id, value: @trip.id %> 
+
+<div class="centeButton text-center"> 
+<!--   <br>
+  <button id='startTracking' type="button" class="btn btn-primary greenColor mb-2 mt-2 "> Start Tracking </button>
+  <br> -->
+
+  <div class="actions d-flex justify-content-center">
+    <%= form.submit "Start Tracking!", :id =>'startTracking', :class => "btn btn-primary greenColor mb-2 mt-2" %>
+  </div>
+<% end %>
+    
+</div>
+<div class="centeButton text-center"> 
+  <br>
+  <%= link_to 'Trackings', trips_path , :id =>'trackings', :class => "btn btn-primary blueColor mb-2 mt-2" %>
+  </div> 
+  <br>
+</div>
+
+
+  <h3 class="text-center"> You are HERE  </h3>
+<!--    <p class="coordinates ptitle text-center">
+
+      <div>
+        Latitude = <span id='latitude'></span>&deg;
+      <br>
+        Longitude = <span id='longitude'></span>&deg;
+      <br>
       </div>
-     <% end %>
 
+    </p> -->
 
-    <div class="field">
-      <%= form.label :name%>
-      <%= form.text_field :name%>
-    </div>
-
-    <div class="field">
-      <%= form.label :start_time %>
-      <%= form.datetime_select :start_time %>
-    </div>
-
-    <div class="field">
-      <%= form.label :end_time %>
-      <%= form.datetime_select :end_time %>
-    </div>
-
-    <div class="field">
-      <%= form.label :paused %>
-      <%= form.check_box(:paused, {checked: false}) %>
-    </div>
-
-    <div class="field">
-      <%= form.label :finished %>
-      <%= form.check_box(:finished) %>
-    </div>
-
-
-    <!-- new_trip_location GET    /trips/:trip_id/locations/new -->
-
-    <!-- THIS COULD BE USED WHEN ADDING THE LOCATIONS TO THE TRIP DIRECTLY
-    <div class='locations_fields'>
-      <%#= form.fields_for :locations do |builder| %>
-        <%#= render 'trips/locations', f: builder %>
-      <%# end %>
-    </div> -->
-
-    <div class="actions">
-      <%= form.submit %>
-    </div>
-  <% end %>
-
-
-  <!-- NO NEED TO BE SHOWN JUST YET
-  <div>
-    Latitude = <span id='latitude'></span>&deg;
-  <br>
-     Longitude = <span id='longitude'></span>&deg;
-  <br>
+    <div class="centeButton text-center"> 
+      <br>
+        <!-- <button id='startPauseButton' type="button" class="btn btn-primary startPauseButton"></button>  -->
+    
   </div>
-
-      <p>DB logs: 
-        <span id="db_log">0</span>
-      </p>
-  <div>
-  <span id="latlng">0 0</span>
+    <br>
+  <div class="d-flex justify-content-center"">  
+    <div id='trackmap'></div>
   </div>
-  <br>
-  <div id='trackmap'></div>
-  <%#= javascript_tag do %>
+</div>
+
+<%= javascript_tag do %>
   var map = L.map('trackmap');
-  var marker = L.marker([0, 0]).addTo(map)
-  <%# end %> -->
+  var marker = L.marker([0, 0]).addTo(map);
+  initLayers()
+  initialLocation() 
+<% end %>
+</div>
 
-  <br>
-  <br>
-  <%= render 'actionButtons', trip: @trip %>
-  <br>
-  <br>
-</div>
-</div>
 

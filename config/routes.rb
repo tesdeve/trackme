@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
 
+  root 'trips#new'
+
   resources :trips do 
     resources :locations
+#
   end
 
-  root 'trips#index'   
-  #get "static_pages/home"
+ #get 'trips/:id/showFromIndex', :to => 'trips#showFromIndex'
+  
+  #root 'static_pages#home'
   
 end
+
 

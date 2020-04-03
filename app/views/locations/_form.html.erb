@@ -11,13 +11,13 @@
     </div>
   <% end %>
 <div class="card">
-  <div class="card-title text-center">
-      <% if current_page?(controller: 'locations', action: 'new' ) %>
+  <!-- <div class="card-title text-center">
+      <%# if current_page?(controller: 'locations', action: 'new' ) %>
         <h1> New Location </h1>
-      <% elsif current_page?(controller: 'locations',  action: 'edit' ) %>
+      <%# elsif current_page?(controller: 'locations',  action: 'edit' ) %>
         <h1> Editing Location </h1>
-      <% end %>
-  </div>
+      <%# end %>
+  </div> -->
   <!-- <br>
    <button id='anotherButton' type="button" class="btn btn-primary stopButton greenColor mb-5 mt-5 "> New Reading</button>
   <br> -->
@@ -44,7 +44,7 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Create Location", :id =>'createLocation', :class => "btn btn-primary greenColor mb-2 mt-2" %>
   </div>
 <% end %>
 
@@ -57,9 +57,14 @@
 <br>
 <div id='trackmap'></div>
 <%= javascript_tag do %>
-var map = L.map('trackmap');
-var marker = L.marker([0, 0]).addTo(map)
+  var map = L.map('trackmap');
+  var marker = L.marker([0, 0]).addTo(map)
 <% end %>
 
 </div>
 </div>
+
+
+
+
+

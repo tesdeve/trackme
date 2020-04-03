@@ -3,6 +3,18 @@
   width: 600px;
 }
 
+
+#trackingMap {
+  height: 400px;
+  width: 600px;
+}
+
+//#trackedMap 
+#map {
+  height: 400px;
+  width: 600px;
+}
+
 .card {
   margin-left: 25%;
   margin-right: 25%;
@@ -22,12 +34,15 @@
 .greenColor {
   background-color: #2da71c !important;
   border-color: #2da71c !important;
-  width: 30%;
-  margin-left: 20px;
 }
 
-#startPauseButton {
-  width: 70%;
+.redColor {
+  background-color: red !important;
+  border-color: red !important;
+}
+
+#startTracking, #trackings, #stopTracking{
+  width: 85%;
 }
 
 .yellowColor{
