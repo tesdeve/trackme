@@ -124,11 +124,11 @@ $( document ).on('turbolinks:load', function() {
   navigator.geolocation.getCurrentPosition(function(position){
     lastLocation = { latitude: position.coords.latitude, longitude: position.coords.longitude}
   }, error, geoOptions); 
-  
+
     intervalID = setInterval(function () {
-      //myLocation();
+      myLocation();
       sendLocation();
-      }, 2000); 
+      }, 900); 
     stopTracking.addEventListener('click', function(event) { 
       console.log("STOP WAS PRESSED")
 
