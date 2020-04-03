@@ -1,0 +1,51 @@
+
+<div class="card border-primary mb-3" >
+  <div class="card-header bg-primary border-primary text-white ">
+    <div >
+      <i class="fas fa-running fa-3x mx-2" style="float:left;"></i>
+      <div>
+        <h4>Trip :<%= trip.id %></h4>
+        <%= trip.start_time ? trip.start_time.strftime("%A, %e %B %Y - %l:%M %P") : "No Starting Time" %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body text-primary", style="padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+    <% if trip.locations.exists? %>
+      <%= content_tag "div", class: "listmap", id: 'map'+trip.id.to_s+'''', data: {locations: trip.locations.select('latitude','longitude')} do %>
+      <% end %>
+
+      <%= javascript_tag do %>
+        var map<%= trip.id %> = L.map('map<%= trip.id %>');
+        var latlngs = JSON.parse(document.getElementById('map<%= trip.id %>').dataset.locations).map(c => [c.latitude, c.longitude])
+        iniTripMap(map<%= trip.id %>, latlngs);
+        delete latlngs;
+      <% end %>
+    <% end %>
+ 
+  </div>
+   <div class="card-footer bg-transparent border-primary", style="padding-bottom: 0;">
+    <table class="table table-borderless text-center ">
+      <thead></thead>
+      <tbody>        
+        <tr>
+          <td>
+            <h5><%#= number_with_precision(trip.km, precision: 2, strip_insignificant_zeros: true) %></h5>
+            <p>KM</p>
+          </td>
+          <td>
+            <h5><%= trip.dup %></h5>
+            <p>Duration</p>
+          </td>
+          <td>
+            <h5><%#= number_with_precision(trip.kmh, precision: 2, strip_insignificant_zeros: true) %></h5>
+            <p>Km/h</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
