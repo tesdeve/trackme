@@ -13,6 +13,8 @@ class LocationsController < ApplicationController
   # GET /locations/1
   # GET /locations/1.json
   def show
+    locations =  @trip.locations #.select('id', 'trip_id', 'latitude', 'longitude', 'logged_at')
+    gon.locations = locations
   end
 
   # GET /locations/new

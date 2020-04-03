@@ -23,51 +23,8 @@ nada = function() {
   	map.setView([0, 0], 2);
 }
 
-// Format the coordinates
-function convertDMS( lat, lng ) {
- 
-  var convertLat = Math.abs(lat);
-  var LatDeg = Math.floor(convertLat);
-  var LatSeg = (convertLat - LatDeg) * 3600
-  var LatMin = Math.floor(LatSeg / 60);
-  LatSeg = Math.round(100*(LatSeg - (LatMin * 60)))/100;
-  var LatCardinal = ((lat > 0) ? "N" : "S");
-   
-  var convertLng = Math.abs(lng);
-  var LngDeg = Math.floor(convertLng);
-  var LngSeg = (convertLng - LngDeg) * 3600
-  var LngMin = Math.floor(LngSeg / 60);
-  LngSeg = Math.round(100*(LngSeg - (LngMin * 60)))/100;
-  var LngCardinal = ((lng > 0) ? "E" : "W");
-   
-  return LatDeg + 'º ' + LatMin + '′ ' + LatSeg + '″' + LatCardinal   + "  -  " + LngDeg + 'º ' + LngMin + '′ ' + LngSeg + '″' + LngCardinal;
-}
 
-// Haversine formula
-function distance(p1, p2) {
-  if ((p1.latitude == p2.latitude) && (p1.longitude == p2.longitude)) {
-    return 0;
-  }
-  else {
 
-    function deg2rad(deg){return deg * (Math.PI/180)};
-
-    // The radius of the planet earth in meters
-    let R = 6378137;
-    let dLat = deg2rad(p2.latitude - p1.latitude)
-    let dLng = deg2rad(p2.longitude - p1.longitude)
-
-    let a = Math.sin(dLat / 2) ** 2 +
-            Math.cos(deg2rad(p1.latitude)) * 
-            Math.cos(deg2rad(p2.latitude)) *
-            Math.sin(dLng / 2) ** 2;
-
-    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    let distance = R * c;
-
-    return distance;
-  }
-}
 
 // Initialize Map for Historic runs
 window.iniRunMap = function(map, latlng){
@@ -121,10 +78,9 @@ sendLocation = function(){
       
       latlng.send_location(Date(), nav_lat, nav_lng, run_id);
 
-      L.polyline([[lastLocation.latitude,lastLocation.longitude],
-                  [nav_lat,nav_lng]], 
-        {weight: 5, color: 'RoyalBlue'}).addTo(map);
-      lastLocation = position.coords;
+      L.polyline([[lastLocation.latitude,lastLocation.longitude], [nav_lat,nav_lng]], 
+                {weight: 5, color: 'RoyalBlue'}).addTo(map);
+                lastLocation = position.coords;
       // Update counter in Page 
       console.log('Send location to DataBase for Run ' + run_id + ': ' + convertDMS(nav_lat, nav_lng));
       const num = Number(document.getElementById('db_log').textContent) + 1;

@@ -7,6 +7,7 @@ var geoOptions = {
   enableHighAccuracy: true
 }
 
+var lastLocation
 
 // Initialize the map and some properties
 
@@ -66,6 +67,19 @@ window.sendLocation = function(){
   }, error, geoOptions);
 }
 
+////////////////////////////////  Tracking  Part  ////////////////////////////////////////
+
+// Layers For trackingMap(Tiles)
+window.trackingMapLayers = function() {  
+  var tile_layer = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution = 'Map data: &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors | &copy; TrackMe!',
+    maxZoom = 19;
+
+  L.tileLayer(tile_layer,  {attribution, maxZoom}).addTo(tripMap);
+  tripMap.options.scrollWheelZoom = true;
+  tripMap.options.doubleClickZoom = true;
+}
+
 // Update the Map and Marker to current lcation constantly
 window.myLocation = function(){
   navigator.geolocation.getCurrentPosition(function(position){ 
@@ -75,49 +89,39 @@ window.myLocation = function(){
     const nav_lat = position.coords.latitude,
           nav_lng = position.coords.longitude;
 
-    const formLatitude = 'location_latitude' 
-    const formLongitude = 'location_longitude'     
-
-    console.log("latitude:" + nav_lat)  // can be REMOVED
-    console.log("longitude:" + nav_lng)  // can be REMOVED
-
-   //document.getElementById(formLatitude).value =  nav_lat
-   //document.getElementById(formLongitude).value =   nav_lng 
-
-    //console.log("(Lat - Lng): " + convertDMS(nav_lat, nav_lng));
-    //document.getElementById('latlng').textContent = convertDMS(nav_lat, nav_lng);  // can be REMOVED
-
-    map.setView([nav_lat, nav_lng], map.getZoom() ? map.getZoom() : 17);
+    tripMap.setView([nav_lat, nav_lng], tripMap.getZoom() ? tripMap.getZoom() : 17);
     marker.setLatLng([nav_lat, nav_lng]);
-  })
-}
-// Listening for click on Start/Pause Button and orquestrate the app
-//window.startTracking =  function() {
-////$( document ).on('turbolinks:load', function() {
-//  //locations(); 2B LOADED WHEN NEEDED
-//  var startTracking = document.getElementById('startTracking') 
-//  //Adds event listener to the click on Start Button
-//    startTracking.addEventListener('click', function (event) { 
-//      alert("OE POSITION: ")
-//      navigator.geolocation.getCurrentPosition(function(position){ 
-//        console.log("OE POSITION: " + position) // can be delted
-//        intervalID = setInterval(function () {
-//        myLocation() ;
-////        sendLocation();
-//        }, 3000); 
-//      })
-//    })
-  
 
-// 
+    //lastLocation = {nav_lat, nav_lng}
+    lastLocation = position.coords;
+    var polyline = L.polyline([[lastLocation.latitude,lastLocation.longitude], [nav_lat,nav_lng]], 
+          {weight: 5, color: 'RoyalBlue'}).addTo(tripMap);
+          
+          tripMap.fitBounds(polyline.getBounds())
+
+
+    //var polyline = L.polyline(data, {color: 'red'}).addTo(map1)
+    //map1.fitBounds(polyline.getBounds())
+
+    //const formLatitude = 'location_latitude' 
+    //const formLongitude = 'location_longitude'     
+//
+    //console.log("latitude:" + nav_lat)  // can be REMOVED
+    //console.log("longitude:" + nav_lng)  // can be REMOVED
+
+
+  }, error, geoOptions)
+}
+
+
+//////////////////////////////// Start / Stops Tracking ////////////////////////////////////////
 
 $( document ).on('turbolinks:load', function() {
-  //var tripLocations = document.getElementById("tripLocations") 
   var stopTracking =  document.getElementById("stopTracking")
 
   if (stopTracking){ 
     intervalID = setInterval(function () {
-     // myLocation();
+      //myLocation();
       sendLocation();
       }, 2000); 
     stopTracking.addEventListener('click', function(event) { 
@@ -128,6 +132,8 @@ $( document ).on('turbolinks:load', function() {
   } 
 })
 
+
+////////////////////////////////////////////////  TRACKED PART ////////////////////////////////////////////////
 
 // Layers For trackedMap(Tiles)
 window.trackedMapLayers = function() {  
@@ -154,7 +160,7 @@ window.trackedMapLayers = function() {
     map1.fitBounds(polyline.getBounds())
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //$( document ).on('turbolinks:load', function() {
 //  //var trackmap = document.getElementById("trackmap")
@@ -296,4 +302,3 @@ function convertDMS( lat, lng ) {
 //   map.options.scrollWheelZoom = true;
 //   map.options.doubleClickZoom = true;
 // }
-
