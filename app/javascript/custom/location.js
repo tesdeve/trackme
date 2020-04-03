@@ -7,7 +7,7 @@ var geoOptions = {
   enableHighAccuracy: true
 }
 
-var lastLocation
+var lastLocation 
 
 // Initialize the map and some properties
 
@@ -83,6 +83,7 @@ window.trackingMapLayers = function() {
 // Update the Map and Marker to current lcation constantly
 window.myLocation = function(){
   navigator.geolocation.getCurrentPosition(function(position){ 
+
     console.log(position) // can be delted
 
     // Get Latitude and Longitude
@@ -93,10 +94,10 @@ window.myLocation = function(){
     marker.setLatLng([nav_lat, nav_lng]);
 
     //lastLocation = {nav_lat, nav_lng}
-    lastLocation = position.coords;
-    var polyline = L.polyline([[lastLocation.latitude,lastLocation.longitude], [nav_lat,nav_lng]], 
+        var polyline = L.polyline([[lastLocation.latitude,lastLocation.longitude], [nav_lat,nav_lng]], 
           {weight: 5, color: 'RoyalBlue'}).addTo(tripMap);
-          
+      lastLocation = position.coords;
+    
           tripMap.fitBounds(polyline.getBounds())
 
 
@@ -120,6 +121,10 @@ $( document ).on('turbolinks:load', function() {
   var stopTracking =  document.getElementById("stopTracking")
 
   if (stopTracking){ 
+  navigator.geolocation.getCurrentPosition(function(position){
+    lastLocation = { latitude: position.coords.latitude, longitude: position.coords.longitude}
+  }, error, geoOptions); 
+  
     intervalID = setInterval(function () {
       //myLocation();
       sendLocation();
