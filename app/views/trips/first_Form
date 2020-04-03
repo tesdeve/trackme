@@ -1,0 +1,105 @@
+<%= form_with(model: trip, local: true) do |form| %>
+  <% if trip.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(trip.errors.count, "error") %> prohibited this trip from being saved:</h2>
+
+      <ul>
+        <% trip.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="card">
+
+  
+    <div class="card-title text-center">
+      <% if !current_page?(controller: 'trips', action: 'new' ) %>
+         <h1> Editing Trip </h1>  
+     <% else%>
+       <h1> New Trip </h1>
+      <% end %>
+  </div>
+  <!-- <br>
+   <button id='anotherButton' type="button" class="btn btn-primary stopButton greenColor mb-5 mt-5 "> New Reading</button>
+  <br> -->
+  <div class="card-body">
+    <% if current_page?(controller: 'trips',  action: 'new' ) %>
+    <% else %>
+      <div class="field">
+        <%= form.label :trip_number%>
+        <%= form.text_field :id, value: @trip.id %> 
+      </div>
+     <% end %>
+
+
+    <div class="field">
+      <%= form.label :name%>
+      <%= form.text_field :name%>
+    </div>
+
+    <div class="field">
+      <%= form.label :start_time %>
+      <%= form.datetime_select :start_time %>
+    </div>
+
+    <div class="field">
+      <%= form.label :end_time %>
+      <%= form.datetime_select :end_time %>
+    </div>
+
+    <div class="field">
+      <%= form.label :paused %>
+      <%= form.check_box(:paused, {checked: false}) %>
+    </div>
+
+    <div class="field">
+      <%= form.label :finished %>
+      <%= form.check_box(:finished) %>
+    </div>
+
+
+    <!-- new_trip_location GET    /trips/:trip_id/locations/new -->
+
+    <!-- THIS COULD BE USED WHEN ADDING THE LOCATIONS TO THE TRIP DIRECTLY
+    <div class='locations_fields'>
+      <%#= form.fields_for :locations do |builder| %>
+        <%#= render 'trips/locations', f: builder %>
+      <%# end %>
+    </div> -->
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>
+
+
+  <!-- NO NEED TO BE SHOWN JUST YET
+  <div>
+    Latitude = <span id='latitude'></span>&deg;
+  <br>
+     Longitude = <span id='longitude'></span>&deg;
+  <br>
+  </div>
+
+      <p>DB logs: 
+        <span id="db_log">0</span>
+      </p>
+  <div>
+  <span id="latlng">0 0</span>
+  </div>
+  <br>
+  <div id='trackmap'></div>
+  <%#= javascript_tag do %>
+  var map = L.map('trackmap');
+  var marker = L.marker([0, 0]).addTo(map)
+  <%# end %> -->
+
+  <br>
+  <br>
+  <%= render 'actionButtons', trip: @trip %>
+  <br>
+  <br>
+</div>
+</div>
+
