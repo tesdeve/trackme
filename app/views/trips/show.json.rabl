@@ -1,1 +1,1 @@
-object @trip.locations
+collection @trip.locations

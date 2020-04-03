@@ -12,16 +12,6 @@
   <% end %>
  <%= render 'trip', trip: @trip %>
 
-
-
-  <!-- render tracking  -->
-  <!-- <div class="d-flex justify-content-center mb-3"">  
-    <div id='trackmap'></div>
-  </div>
- -->
-  
-
-
   </div>
     <br>
 
@@ -30,10 +20,11 @@
   </div>
 </div>
 <%= javascript_tag do %>
-  var map = L.map('trackingMap');
-  var marker = L.marker([0, 0]).addTo(map);
-  initLayers()
-  initialLocation() 
+  var tripMap = L.map('trackingMap');
+  var marker = L.marker([0, 0]).addTo(tripMap);
+  trackingMapLayers()
+  <!-- trackingLocations() -->
+  myLocation()
 <% end %>
 
 
