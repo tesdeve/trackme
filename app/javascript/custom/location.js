@@ -9,27 +9,7 @@ var geoOptions = {
 
 var lastLocation 
 
-// Initialize the map and some properties
-
-//otra = function() {
-//  
-//  var tile_layer = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-//    attribution = 'Map data: &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors | &copy; TrackMe!',
-//    maxZoom = 19;
-//
-//  L.tileLayer(tile_layer, {attribution, maxZoom}).addTo(map);
-//  map.options.scrollWheelZoom = true;
-//  map.options.doubleClickZoom = true;
-//
-//  if(navigator.geolocation){
-//    navigator.geolocation.getCurrentPosition(myLocation);
-//    initialLocation()
-//  } else {
-//    map.setView([0, 0], 2);
-//  }
-//}
-//
-
+//////////////////////////////// INITIALIZATION PART //////////////////////////////////////////////////////////////////////
 
 // Initialize Layers(Tiles)
 window.initLayers = function() {  
@@ -66,8 +46,9 @@ window.sendLocation = function(){
     console.log('Send location to DataBase # ');
   }, error, geoOptions);
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////  Tracking  Part  ////////////////////////////////////////
+////////////////////////////////  Tracking  Part  //////////////////////////////////////////////////////////////////////////////
 
 // Layers For trackingMap(Tiles)
 window.trackingMapLayers = function() {  
@@ -93,29 +74,17 @@ window.myLocation = function(){
     tripMap.setView([nav_lat, nav_lng], tripMap.getZoom() ? tripMap.getZoom() : 17);
     marker.setLatLng([nav_lat, nav_lng]);
 
-    //lastLocation = {nav_lat, nav_lng}
-        var polyline = L.polyline([[lastLocation.latitude,lastLocation.longitude], [nav_lat,nav_lng]], 
-          {weight: 5, color: 'RoyalBlue'}).addTo(tripMap);
-      lastLocation = position.coords;
+    var polyline = L.polyline([[lastLocation.latitude,lastLocation.longitude], [nav_lat,nav_lng]], 
+                  {weight: 5, color: 'RoyalBlue'}).addTo(tripMap);
+    lastLocation = position.coords;
     
-          tripMap.fitBounds(polyline.getBounds())
-
-
-    //var polyline = L.polyline(data, {color: 'red'}).addTo(map1)
-    //map1.fitBounds(polyline.getBounds())
-
-    //const formLatitude = 'location_latitude' 
-    //const formLongitude = 'location_longitude'     
-//
-    //console.log("latitude:" + nav_lat)  // can be REMOVED
-    //console.log("longitude:" + nav_lng)  // can be REMOVED
-
+    tripMap.fitBounds(polyline.getBounds())
 
   }, error, geoOptions)
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-//////////////////////////////// Start / Stops Tracking ////////////////////////////////////////
+//////////////////////////////// Start / Stops Tracking ////////////////////////////////////////////////////////////////////////
 
 $( document ).on('turbolinks:load', function() {
   var stopTracking =  document.getElementById("stopTracking")
