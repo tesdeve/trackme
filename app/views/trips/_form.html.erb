@@ -1,76 +1,58 @@
+
 <div class="primerForm">
 
-<%= form_with(model: trip, local: true) do |form| %>
-  <% if trip.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(trip.errors.count, "error") %> prohibited this trip from being saved:</h2>
+  <div class="tripsTabButton text-center"> 
+  <br>
+    <%= link_to 'Trips History', trips_path , :id =>'trackings', :class => "btn btn-primary blueColor mb-2 mt-2" %>
+  </div>  
 
-      <ul>
-        <% trip.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+
+  <%= form_with(model: trip, local: true) do |form| %>
+    <% if trip.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(trip.errors.count, "error") %> prohibited this trip from being saved:</h2>
+
+        <ul>
+          <% trip.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="card cardNew">
+    
+      <%= form.hidden_field :start_time, :value => DateTime.now %>
+
+      <div class="card-body">
+        <div class="text-center startTrip"> 
+          <div class="actions d-flex justify-content-center">
+            <%= form.submit "Start Trip!", :id =>'startTracking', :class => "btn btn-primary greenColor mb-2 mt-2" %>
+          </div>
+        </div>
+  <% end %>
+               
+
+      </div>
+    <br>  
+       <!-- PAUSE BUTTON 
+       <div class="centeButton text-center"> 
+        <br>
+         <button id='startPauseButton' type="button" class="btn btn-primary startPauseButton"></button>     
+      </div>-->   
+        <div class="d-flex justify-content-center">  
+          <div id='trackmap'></div>
+        </div>
+
     </div>
+
+  <%= javascript_tag do %>
+    var map = L.map('trackmap');
+    var marker = L.marker([0, 0]).addTo(map);
+    initLayers(map)
+    initialLocation() 
   <% end %>
 
-  <div class="card">
-  <div class="card-title text-center">
-      <h1> Ready to Track </h1>
-  </div>
-  
-  <%= form.hidden_field :start_time, :value => DateTime.now %>
-
-
-  <div class="card-body">
-
-<div class="centeButton text-center"> 
-<!--   <br>
-  <button id='startTracking' type="button" class="btn btn-primary greenColor mb-2 mt-2 "> Start Tracking </button>
-  <br> -->
-
-  <div class="actions d-flex justify-content-center">
-    <%= form.submit "Start Tracking!", :id =>'startTracking', :class => "btn btn-primary greenColor mb-2 mt-2" %>
-  </div>
-<% end %>
-    
-</div>
-<div class="centeButton text-center"> 
-  <br>
-  <%= link_to 'Trackings', trips_path , :id =>'trackings', :class => "btn btn-primary blueColor mb-2 mt-2" %>
-  </div> 
-  <br>
-</div>
-
-
-  <h3 class="text-center"> You are HERE  </h3>
-<!--    <p class="coordinates ptitle text-center">
-
-      <div>
-        Latitude = <span id='latitude'></span>&deg;
-      <br>
-        Longitude = <span id='longitude'></span>&deg;
-      <br>
-      </div>
-
-    </p> -->
-
-    <div class="centeButton text-center"> 
-      <br>
-        <!-- <button id='startPauseButton' type="button" class="btn btn-primary startPauseButton"></button>  -->
-    
-  </div>
-    <br>
-  <div class="d-flex justify-content-center"">  
-    <div id='trackmap'></div>
-  </div>
-</div>
-
-<%= javascript_tag do %>
-  var map = L.map('trackmap');
-  var marker = L.marker([0, 0]).addTo(map);
-  initLayers(map)
-  initialLocation() 
-<% end %>
 </div>
 
 

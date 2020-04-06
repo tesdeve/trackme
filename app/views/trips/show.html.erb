@@ -1,24 +1,20 @@
-<p id="notice"><%= notice %></p>
-
-<div class="card">
-  <div class="centeButton text-center mb-5"> 
-
-<% if @trip.finished == (false || nil) %>
-  <%= form_with(model: @trip, local: true) do |form| %>
-    <%= form.hidden_field :finished, :value => true %>  
-    <%= form.hidden_field :end_time, :value => DateTime.now %>  
-    <%#= link_to 'Stop',root_path , :id =>'stopTracking', :class => "btn btn-primary redColor mb-2 mt-2" %> 
-    <%= form.submit 'Stop Tracking', name: 'stopTracking', id: "stopTracking", :class => "btn btn-primary redColor mb-2 mt-2"  %>
-  <% end %>
- <%= render 'trip', trip: @trip %>
-
+<div class="card cardTrackingShow">
+  <div class=" text-center "> 
+    <% if @trip.finished == (false || nil) %>
+      <%= form_with(model: @trip, local: true) do |form| %>
+        <%= form.hidden_field :finished, :value => true %>  
+        <%= form.hidden_field :end_time, :value => DateTime.now  %> 
+        <%= form.submit 'Stop Tracking', name: 'stopTracking', id: "stopTracking", :class => "btn btn-primary stopButtonShow redColor mb-2"  %>
+      <% end %>
+     <%= render 'trip', trip: @trip %>
   </div>
     <br>
 
- <div class="d-flex justify-content-center"">  
+  <div class="d-flex justify-content-center">  
     <div id='trackingMap'></div>
   </div>
 </div>
+
 <%= javascript_tag do %>
   var tripMap = L.map('trackingMap');
   var marker = L.marker([0, 0]).addTo(tripMap);
@@ -27,7 +23,6 @@
 <% end %>
 
 
-</div>
 
 
 

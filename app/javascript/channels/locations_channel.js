@@ -21,7 +21,5 @@ window.latlng =  consumer.subscriptions.create("LocationsChannel", {
  send_location( trip_id, lat, lng, logged_at){
     this.perform("send_location", { trip_id: trip_id, latitude: lat, longitude: lng , logged_at: logged_at })
   }
-  // trip_id,  , logged_at 
-  //trip_id: trip_id,  , logged_at: logged_at 
   
 })

@@ -8,9 +8,6 @@ class TripsController < ApplicationController
   def index
     @trips =  Trip.all
     gon.trips = @trips
-
-    #locations =  @trip.locations #.select('id', 'trip_id', 'latitude', 'longitude', 'logged_at')
-   
   end
 
   # GET /locations/1
@@ -52,15 +49,7 @@ class TripsController < ApplicationController
   # PATCH/PUT /trips/1
   # PATCH/PUT /trips/1.json
   def update
-    respond_to do |format|
-      if @trip.update(trip_params)
-        format.html { redirect_to root_path, notice: 'Trip was successfully updated.' }
-        format.json { render :show, status: :ok, location: root_path }
-      else
-        format.html { render :edit }
-        format.json { render json: @trip.errors, status: :unprocessable_entity }
-      end
-    end
+    set_locationsPresent
   end
 
   # DELETE /trips/1
@@ -77,6 +66,21 @@ class TripsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_trip
       @trip = Trip.find(params[:id])
+    end
+
+    # Trips should have at least two locations
+    def set_locationsPresent
+      set_trip
+      if @trip.locations.count > 1
+        @trip.save
+        respond_to do |format|
+          @trip.update(trip_params)
+          format.html { redirect_to root_path, notice: 'Trip was successfully updated.' }        
+        end
+      else 
+        @trip.destroy!
+        redirect_to new_trip_path
+      end
     end
 
     # Only allow a list of trusted parameters through.
