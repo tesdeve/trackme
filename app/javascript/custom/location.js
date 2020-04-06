@@ -8,14 +8,17 @@ var geoOptions = {
 }
 
 var lastLocation 
+//window.tiles = function() { 
+
+// Initialize Layers(Tiles)
+var tile_layer = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  attribution = 'Map data: &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors | &copy; TrackMe!',
+                  maxZoom = 19;
 
 //////////////////////////////// INITIALIZATION PART //////////////////////////////////////////////////////////////////////
 
-// Initialize Layers(Tiles)
-window.initLayers = function() {  
-  var tile_layer = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution = 'Map data: &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors | &copy; TrackMe!',
-    maxZoom = 19;
+// Initial Location Layers added
+window.initLayers = function() {
 
   L.tileLayer(tile_layer, {attribution, maxZoom}).addTo(map);
   map.options.scrollWheelZoom = true;
@@ -36,25 +39,12 @@ window.initialLocation = function(){
     marker.setLatLng([nav_lat, nav_lng]);
   })
 }
-
-
-// Send location to Server
-window.sendLocation = function(){
-  var trip_id = gon.trip.id
-  navigator.geolocation.getCurrentPosition(function(position){
-    latlng.send_location(trip_id, position.coords.latitude, position.coords.longitude, Date());
-    console.log('Send location to DataBase # ');
-  }, error, geoOptions);
-}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////  Tracking  Part  //////////////////////////////////////////////////////////////////////////////
 
 // Layers For trackingMap(Tiles)
 window.trackingMapLayers = function() {  
-  var tile_layer = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution = 'Map data: &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors | &copy; TrackMe!',
-    maxZoom = 19;
 
   L.tileLayer(tile_layer,  {attribution, maxZoom}).addTo(tripMap);
   tripMap.options.scrollWheelZoom = true;
@@ -71,10 +61,12 @@ window.myLocation = function(){
     const nav_lat = position.coords.latitude,
           nav_lng = position.coords.longitude;
 
+    const currentLocation = [nav_lat,nav_lng]
+
     tripMap.setView([nav_lat, nav_lng], tripMap.getZoom() ? tripMap.getZoom() : 17);
     marker.setLatLng([nav_lat, nav_lng]);
 
-    var polyline = L.polyline([[lastLocation.latitude,lastLocation.longitude], [nav_lat,nav_lng]], 
+    var polyline = L.polyline([[lastLocation.latitude,lastLocation.longitude], currentLocation], 
                   {weight: 5, color: 'RoyalBlue'}).addTo(tripMap);
     lastLocation = position.coords;
     
@@ -82,6 +74,16 @@ window.myLocation = function(){
 
   }, error, geoOptions)
 }
+
+// Send location to Server
+window.sendLocation = function(){
+  var trip_id = gon.trip.id
+  navigator.geolocation.getCurrentPosition(function(position){
+    latlng.send_location(trip_id, position.coords.latitude, position.coords.longitude, Date());
+    console.log('Send location to DataBase # ');
+  }, error, geoOptions);
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////// Start / Stops Tracking ////////////////////////////////////////////////////////////////////////
@@ -89,10 +91,10 @@ window.myLocation = function(){
 $( document ).on('turbolinks:load', function() {
   var stopTracking =  document.getElementById("stopTracking")
 
-  if (stopTracking){ 
-  navigator.geolocation.getCurrentPosition(function(position){
-    lastLocation = { latitude: position.coords.latitude, longitude: position.coords.longitude}
-  }, error, geoOptions); 
+    if (stopTracking){ 
+    navigator.geolocation.getCurrentPosition(function(position){
+      lastLocation = { latitude: position.coords.latitude, longitude: position.coords.longitude}
+    }, error, geoOptions); 
 
     intervalID = setInterval(function () {
       myLocation();
@@ -106,25 +108,17 @@ $( document ).on('turbolinks:load', function() {
   } 
 })
 
-
 ////////////////////////////////////////////////  TRACKED PART ////////////////////////////////////////////////
 
 // Layers For trackedMap(Tiles)
-window.trackedMapLayers = function() {  
-  var tile_layer = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution = 'Map data: &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors | &copy; TrackMe!',
-    maxZoom = 19;
+window.trackedMapLayers = function() {
 
   L.tileLayer(tile_layer,  {attribution, maxZoom}).addTo(map1);
   map1.options.scrollWheelZoom = true;
   map1.options.doubleClickZoom = true;
 }
 
-
-
-// THIS PART BELOW COMMENTED /////
-//Fuction that gets all Locations and filter them getting only the Latitud and Longitude.
-//Then puts it on the map.
+//Gets all Locations and filter them getting only the Latitud and Longitude. Then puts it on the map.
  window.locations = function(){
   var locations = gon.locations
     //document.getElementById('locations2').innerHTML = data2
@@ -135,95 +129,6 @@ window.trackedMapLayers = function() {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//$( document ).on('turbolinks:load', function() {
-//  //var trackmap = document.getElementById("trackmap")
-//  var startTracking = document.getElementById("startTracking") 
-//  var stopTracking =  document.getElementById("stopTracking") 
-//  startTracking.addEventListener('click', function(event) { 
-//    console.log("START WAS PRESSED")
-//    //if (trackmap){ 
-//      //alert("OE POSITION: ")
-//      intervalID = setInterval(function () {
-//       // myLocation();
-//        sendLocation();
-//        }, 2000); 
-//
-//      stopTracking.addEventListener('click', function(event) { 
-//      console.log("STOP WAS PRESSED")
-//      //remove.sendLocation()
-//      clearInterval(intervalID);
-//      }) 
-//    //}
-//  })
-//})
-//
-
-
-//    if (startPauseButton.textContent === "Start") {
-//      console.log("START WAS PRESSED") // can be REMOVED
-//      startPauseButton.classList.remove("blueColor")
-//      startPauseButton.textContent = "Pause"
-//      startPauseButton.classList.add("yellowColor")
-//      intervalID = setInterval(function () {
-//        myLocation() ;
-//        sendLocation();
-//        }, 3000); 
-//    } else if  (startPauseButton.textContent === "Pause") {
-//      console.log("PAUSE WAS PRESSED") // can be REMOVED
-//      startPauseButton.classList.remove("yellowColor")
-//      startPauseButton.classList.add("blueColor")
-//      startPauseButton.textContent = "Start"
-//      clearInterval(intervalID);
-//    } 
-//  })
-//
-//  var anotherButton = document.getElementById('anotherButton');
-//  anotherButton.addEventListener('click', function(event) {      
-//    location.reload();
-//  })
-//})
-
-
-
-//startTracking
-
-
-
-
-
-
-//
-
-
-
-// ORIGINAL //
-//        // Update the Map and Marker to current lcation constantly
-//        window.myLocation = function(){
-//          navigator.geolocation.getCurrentPosition(function(position){ 
-//            console.log(position) // can be delted
-//
-//            // Get Latitude and Longitude
-//            const nav_lat = position.coords.latitude,
-//                  nav_lng = position.coords.longitude;
-//
-//            const formLatitude = 'location_latitude' 
-//            const formLongitude = 'location_longitude'     
-//
-//            console.log("latitude:" + nav_lat)  // can be REMOVED
-//            console.log("longitude:" + nav_lng)  // can be REMOVED
-//
-//           document.getElementById(formLatitude).value =  nav_lat
-//           document.getElementById(formLongitude).value =   nav_lng 
-//
-//            console.log("(Lat - Lng): " + convertDMS(nav_lat, nav_lng));
-//            document.getElementById('latlng').textContent = convertDMS(nav_lat, nav_lng);  // can be REMOVED
-//
-//            map.setView([nav_lat, nav_lng], map.getZoom() ? map.getZoom() : 17);
-//            marker.setLatLng([nav_lat, nav_lng]);
-//          })
-//        }
-
 
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -247,32 +152,3 @@ function convertDMS( lat, lng ) {
    
   return LatDeg + 'º ' + LatMin + '′ ' + LatSeg + '″' + LatCardinal   + "  -  " + LngDeg + 'º ' + LngMin + '′ ' + LngSeg + '″' + LngCardinal;
 }
-
-//
-////////////////////////////////////////
-
-
-// Initialize Map for Historic runs
-// window.iniTripMap = function(map, latlng){
-// 
-//   iniMap(map);
-// 
-//   var polyline = L.polyline(latlngs, {weight: 5, color: 'RoyalBlue'}).addTo(map);
-//   // zoom the map to the polyline
-//   map.fitBounds(polyline.getBounds());
-// 
-//   L.circle(latlngs[0], {radius: 3, color: 'Green'}).addTo(map);
-//   L.circle(latlngs.slice(-1)[0], {radius: 3, color: 'DarkRed'}).addTo(map);
-// 
-// }
-// 
-// // Initialize Map
-// iniMap = function(map){
-//   var tile_layer = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-//     attribution = 'Map data: &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors | &copy; TrackMe!',
-//     maxZoom = 19;
-// 
-//   L.tileLayer(tile_layer, {attribution, maxZoom}).addTo(map);
-//   map.options.scrollWheelZoom = true;
-//   map.options.doubleClickZoom = true;
-// }

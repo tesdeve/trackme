@@ -1,21 +1,24 @@
   <div class="card-body">
     <p>
-      <strong>Trip Number:</strong>
+      <strong>Trip:</strong>
       <%= @trip.id %>
     </p>
 
     <p>
-      <strong>Name:</strong>
-      <%= @trip.name.present? ? @trip.name : "None given" %>
+      <strong>Started On:</strong>
+      <%= @trip.start_time.strftime('%d %b %Y %H:%M:%S') %>
     </p>
 
-    <p>
-      <strong>Start time:</strong>
-      <%= @trip.start_time %>
-    </p>
 
-    <p>
+ <!-- <p>
       <strong>End time:</strong>
-      <%= @trip.end_time %>
+      <%#= @trip.end_time %>
     </p>
   <br>
+
+ 
+    <p>
+      <strong>Name:</strong>
+      <%#= @trip.name.present? ? @trip.name : "None given" %>
+    </p>
+ -->
