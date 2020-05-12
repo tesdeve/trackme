@@ -6,6 +6,12 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def index
     @locations =  @trip.locations
+    respond_to do |format|
+      format.html {}
+      format.json { render json: {locations: @locations}, status: :ok}
+      #format.json { render json: {trip: @trip, locations: @locations}, status: :ok}
+    end 
+
     locations =  @trip.locations #.select('id', 'trip_id', 'latitude', 'longitude', 'logged_at')
     gon.locations = locations
   end

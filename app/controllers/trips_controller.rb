@@ -6,8 +6,14 @@ class TripsController < ApplicationController
 
 
   def index
-    @trips =  Trip.all
+    @trips =  Trip.all   
+    respond_to do |format|
+      format.html {}
+      format.json { render json: {trips: @trips}, status: :ok}
+    end 
     gon.trips = @trips
+
+    #json_response(trips: @trips) THIS WILL WORK COMBINED WITH APPCONTROLLER AND CONCERN
   end
 
   # GET /locations/1
@@ -85,7 +91,7 @@ class TripsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def trip_params
-      params.require(:trip).permit(:id, :name, :start_time, :end_time, :paused, :finished)  
+      params.require(:trip).permit(:id, :name, :start_time, :end_time, :paused, :finished, :distance, :speed, :duration)  
     #locations_attributes: [ :id, :latitude, :longitude, :logged_at]
     end
 end

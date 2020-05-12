@@ -10,7 +10,7 @@ var geoOptions = {
 var lastLocation 
 //window.tiles = function() { 
 
-// Initialize Layers(Tiles)
+// Initialize Layers(Tiles) for all maps
 var tile_layer = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                   attribution = 'Map data: &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors | &copy; TrackMe!',
                   maxZoom = 19;
@@ -55,7 +55,7 @@ window.trackingMapLayers = function() {
 window.myLocation = function(){
   navigator.geolocation.getCurrentPosition(function(position){ 
 
-    console.log(position) // can be delted
+    console.log(position) // can be deleted
 
     // Get Latitude and Longitude
     const nav_lat = position.coords.latitude,
@@ -69,7 +69,11 @@ window.myLocation = function(){
     var polyline = L.polyline([[lastLocation.latitude,lastLocation.longitude], currentLocation], 
                   {weight: 5, color: 'RoyalBlue'}).addTo(tripMap);
     lastLocation = position.coords;
-    
+
+
+    //console.log('Last Location Latitude:' + lastLocation.latitude)
+
+
     tripMap.fitBounds(polyline.getBounds())
 
   }, error, geoOptions)
@@ -79,8 +83,12 @@ window.myLocation = function(){
 window.sendLocation = function(){
   var trip_id = gon.trip.id
   navigator.geolocation.getCurrentPosition(function(position){
-    latlng.send_location(trip_id, position.coords.latitude, position.coords.longitude, Date());
-    console.log('Send location to DataBase # ');
+   // if ( lastLocation != position.coords) {
+      //console.log('Last Location Latitude:' + lastLocation.latitude)
+      //console.log('Position Coords Latitude:' + position.coords.latitude)
+      latlng.send_location(trip_id, position.coords.latitude, position.coords.longitude, Date());
+      console.log('Send location to DataBase # ');
+    //}
   }, error, geoOptions);
 }
 
@@ -132,6 +140,32 @@ window.trackedMapLayers = function() {
 
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+// Haversine formula - CALCULATES DISTANCE
+function distance(p1, p2) {
+  if ((p1.latitude == p2.latitude) && (p1.longitude == p2.longitude)) {
+    return 0;
+  }
+  else {
+
+    function deg2rad(deg){return deg * (Math.PI/180)};
+
+    // The radius of the planet earth in meters
+    let R = 6378137;
+    let dLat = deg2rad(p2.latitude - p1.latitude)
+    let dLng = deg2rad(p2.longitude - p1.longitude)
+
+    let a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(deg2rad(p1.latitude)) * 
+            Math.cos(deg2rad(p2.latitude)) *
+            Math.sin(dLng / 2) ** 2;
+
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    let distance = R * c;
+
+    return distance;
+  }
 }
 
 
