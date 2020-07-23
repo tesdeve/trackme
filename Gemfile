@@ -30,6 +30,11 @@ gem 'gon'
 gem 'rabl-rails'
 
 
+
+
+
+
+
 #gem "actionview", ">= 6.0.2.2" # Resolves security vulnerability
 
 
